@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # SocialInscription
 
 Projet réalisé dans le cadre du DevLab Devinci
@@ -50,3 +51,6 @@ git clone https://github.com/devlab-devinci/social-inscription.git
 
 
 
+=======
+# social-inscription
+>>>>>>> 20e88cf329d72a4325acd8c3dfdb17a7976b9cf2
