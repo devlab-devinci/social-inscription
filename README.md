@@ -1,4 +1,4 @@
-# SocialInscription
+# Social Inscription
 
 Projet réalisé dans le cadre du DevLab Devinci
 
