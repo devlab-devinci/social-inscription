@@ -1,27 +1,52 @@
 # SocialInscription
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 7.0.6.
+Projet réalisé dans le cadre du DevLab Devinci
 
-## Development server
+## Installation : 
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
+### Prérequis
+Pour installer le projet, merci d'avoir un gestionnaire de paquet installer  : 
+ - https://yarnpkg.com/fr/ 
+ - https://www.npmjs.com/
 
-## Code scaffolding
+ Les instructions qui suiveront utiliserons Yarn, merci de les adapter en fonction.
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+Installation du CLI tool Angular : 
 
-## Build
+`
+yarn global add @angular/cli
+`
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory. Use the `--prod` flag for a production build.
+### Installation projet
 
-## Running unit tests
+ #### 1 . Récupération du projet : 
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+`
+git clone https://github.com/devlab-devinci/social-inscription.git
+`
+ 
+ #### 2 . Installation des dépendances : 
 
-## Running end-to-end tests
+ `
+ yarn install
+ `
 
-Run `ng e2e` to execute the end-to-end tests via [Protractor](http://www.protractortest.org/).
+ #### 3 . Lancement du serveur de dev : 
 
-## Further help
+ - `ng serve` pour un serveur sur le port par defaut (4200)
+ - `ng serve --open` pour un server sur port par defaut et ouverture dans le navigateur 
+ - `ng serve --open --port=8080` pour un serveur sur le port de son choix et ouverture dans le navigateur
+ 
 
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI README](https://github.com/angular/angular-cli/blob/master/README.md).
+
+ C'est tout pour l'instant, bonne visite!
+ 
+
+
+
+
+
+
+
+
+

@@ -3,6 +3,9 @@ import { NgModule } from '@angular/core';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
+import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
+import { SCMaterialModule } from './SCMaterialModule';
+
 
 @NgModule({
   declarations: [
@@ -10,7 +13,9 @@ import { AppComponent } from './app.component';
   ],
   imports: [
     BrowserModule,
-    AppRoutingModule
+    AppRoutingModule,
+    BrowserAnimationsModule,
+    SCMaterialModule
   ],
   providers: [],
   bootstrap: [AppComponent]
