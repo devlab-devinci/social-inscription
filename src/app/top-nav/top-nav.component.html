@@ -1,0 +1,13 @@
+<mat-toolbar color="primary" class="main-menu">
+  Social Inscription
+  <div *ngIf="auth.user | async as user">
+  <mat-menu #appMenu="matMenu">
+      <button mat-menu-item [routerLink]="[ '/user' ]">My account</button>
+      <button mat-menu-item (click)="doLogout()">Logout</button>
+  </mat-menu>
+
+  <button mat-icon-button [matMenuTriggerFor]="appMenu">
+    <mat-icon>more_vert</mat-icon>
+  </button>
+</div>
+</mat-toolbar>

@@ -37,8 +37,6 @@ git clone https://github.com/devlab-devinci/social-inscription.git
  - `ng serve --open` pour un server sur port par defaut et ouverture dans le navigateur 
  - `ng serve --open --port=8080` pour un serveur sur le port de son choix et ouverture dans le navigateur
  
-
-
  C'est tout pour l'instant, bonne visite!
  
 

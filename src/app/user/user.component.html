@@ -1,0 +1,4 @@
+<div *ngIf="auth.user | async as user">
+        <h3>Hello {{user?.displayName || 'User'}}</h3>
+  </div>
+<button mat-button (click)="auth.signOut()">Log out</button>

@@ -1,0 +1,42 @@
+<mat-card>
+    <mat-card-title>
+      Inscription
+    </mat-card-title>
+    <form [formGroup]="registerForm" class="flex-column" (submit)="doRegister()">
+        <mat-form-field>
+        <input formControlName="email" matInput placeholder="Votre addresse email">
+        <mat-error *ngIf="email.invalid && email.touched">
+            Votre email est incorrect
+        </mat-error>
+      </mat-form-field>
+      
+      <mat-form-field>
+        <input formControlName="password" matInput placeholder="Votre mot de passe" type="password">
+        <mat-hint align="end">
+          Votre mot de passe contient au moins une lettre en un chiffre
+        </mat-hint>
+        <mat-error *ngIf="password.invalid && password.touched">
+            Votre mot de passe est incorrect
+        </mat-error>
+      </mat-form-field>
+
+      <mat-form-field>
+        <input formControlName="password_conf" matInput placeholder="Confirmez votre mot de passe" type="password">
+        <mat-error *ngIf="password_conf?.invalid && password.touched">
+            Les mots de passe doivent être indentiques
+        </mat-error>
+      </mat-form-field>
+      
+        <mat-checkbox>
+            J'ai les les CGUs
+        </mat-checkbox>
+
+      <button type="submit" [disabled]="registerForm.invalid" mat-raised-button>Connexion</button>
+    </form>
+    <hr>
+    <a [routerLink]="[ '/login']">Je'ai déjà un compte</a>
+  
+    <mat-card-actions>
+      <button mat-raised-button (click)="auth.googleLogin()">Login with google</button>
+    </mat-card-actions>
+  </mat-card>
