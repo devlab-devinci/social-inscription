@@ -17,6 +17,7 @@ import { AngularFireAuthModule } from '@angular/fire/auth';
 import { TopNavComponent } from './top-nav/top-nav.component';
 import { MatSnackBar } from '@angular/material';
 import {MatSnackBarModule} from '@angular/material/snack-bar';
+import { ForgottenPasswordComponent } from './forgotten-password/forgotten-password.component';
 
 
 
@@ -27,7 +28,8 @@ import {MatSnackBarModule} from '@angular/material/snack-bar';
     LoginComponent,
     RegisterComponent,
     UserComponent,
-    TopNavComponent
+    TopNavComponent,
+    ForgottenPasswordComponent
   ],
   imports: [
     BrowserModule,

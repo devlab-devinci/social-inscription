@@ -3,13 +3,18 @@
       Inscription
     </mat-card-title>
     <form [formGroup]="registerForm" class="flex-column" (submit)="doRegister()">
-        
       <mat-form-field>
             <input formControlName="surname" matInput required placeholder="Votre prénom">
+            <mat-error *ngIf="surname.invalid && surname.touched">
+              Votre email est incorrect
+          </mat-error>
         </mat-form-field>
 
       <mat-form-field>
             <input formControlName="name" matInput required placeholder="Votre nom">
+            <mat-error *ngIf="name.invalid && name.touched">
+              Votre email est incorrect
+          </mat-error>
         </mat-form-field>
 
         <mat-form-field>
@@ -36,14 +41,14 @@
         </mat-error>
       </mat-form-field>
       
-        <mat-checkbox>
+        <mat-checkbox formControlName="rgpd_check">
             J'ai lu et acceptés les CGUs
         </mat-checkbox>
 
       <button type="submit" [disabled]="registerForm.invalid" mat-raised-button>Connexion</button>
     </form>
     <hr>
-    <a [routerLink]="['/login']">Je'ai déjà un compte</a>
+    <a [routerLink]="['/login']">J'ai déjà un compte</a>
     <a [routerLink]="['/forgotten-password']">J'ai oublié mon mon de passe</a>
   
     <mat-card-actions>

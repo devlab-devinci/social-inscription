@@ -11,6 +11,16 @@ import {MatSnackBar} from '@angular/material';
   providedIn: 'root'
 })
 export class AuthService {
+  resetPassword(value: any): any {
+    firebase.auth().sendPasswordResetEmail(value).then(()=>{
+      this.processErrors({
+        code : 'sc/password-reset-sent',
+        message : `Un mail vous à été envoyer à : ${value}`
+      })
+    }).catch(error => {
+      this.processErrors(error)
+    })
+  }
   constructor(public afAuth : AngularFireAuth, public router : Router, private zone: NgZone, public snackBar : MatSnackBar) { 
     
   }

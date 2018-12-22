@@ -14,8 +14,12 @@ export class RegisterComponent implements OnInit {
   registerForm : FormGroup;
   ngOnInit() {
     this.registerForm = this.fb.group({
-      surname : ['', []],
-      name : ['', []],
+      surname : ['', [
+        Validators.required
+      ]],
+      name : ['', [
+        Validators.required
+      ]],
       email : ['', [
         Validators.required,
         Validators.email
@@ -39,6 +43,9 @@ export class RegisterComponent implements OnInit {
   }
 
   get name(){
+    return this.registerForm.get('name')
+  }
+  get surname(){
     return this.registerForm.get('name')
   }
   get email(){
