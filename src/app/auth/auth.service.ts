@@ -4,11 +4,14 @@ import * as firebase from 'firebase';
 import { Router } from '@angular/router';
 import { first } from 'rxjs/operators';
 import { resolve } from 'q';
+import {MatSnackBar} from '@angular/material';
+
+
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
-  constructor(public afAuth : AngularFireAuth, public router : Router, private zone: NgZone,) { 
+  constructor(public afAuth : AngularFireAuth, public router : Router, private zone: NgZone, public snackBar : MatSnackBar) { 
     
   }
   googleLogin() {
@@ -19,8 +22,8 @@ export class AuthService {
       resolve(res);
       this.router.navigate(['/user']);
     })
-    .catch(function(error) {
-      console.log(error);
+    .catch((error) => {
+      this.processErrors(error)
     });
 
   }
@@ -33,8 +36,8 @@ export class AuthService {
         this.router.navigate(['/user']);
       });
     })
-    .catch(function(error) {
-      alert(error.toString())
+    .catch((error) => {
+        this.processErrors(error)
     });
   }
   register(emailRegister: any, passwordRegister: any): any {
@@ -44,9 +47,29 @@ export class AuthService {
       resolve(res);
       this.router.navigate(['/user']);
     })
-    .catch(function(error) {
-      console.log(error);
+    .catch((error) => {
+      this.processErrors(error)
+    }); 
+  }
+
+
+  processErrors(error){
+    let errorString = "";
+    switch (error.code) {
+      case "auth/user-not-found" : 
+          errorString = "Aucun utilisateur ne coresspond à cette adresse mail";
+          break;
+      case "auth/wrong-password" : 
+          errorString = "Le mot de passe est incorrect";
+          break; 
+      default : 
+        errorString = error.message;
+    }
+
+    this.snackBar.open(errorString, "Ok", {
+      duration: 5000,
     });
+  
   }
 
 

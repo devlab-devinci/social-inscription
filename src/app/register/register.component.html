@@ -34,7 +34,8 @@
       <button type="submit" [disabled]="registerForm.invalid" mat-raised-button>Connexion</button>
     </form>
     <hr>
-    <a [routerLink]="[ '/login']">Je'ai déjà un compte</a>
+    <a [routerLink]="['/login']">Je'ai déjà un compte</a>
+    <a [routerLink]="['/forgotten-password']">J'ai oublié mon mon de passe</a>
   
     <mat-card-actions>
       <button mat-raised-button (click)="auth.googleLogin()">Login with google</button>

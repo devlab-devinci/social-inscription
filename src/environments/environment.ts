@@ -5,12 +5,12 @@
 export const environment = {
   production: false,
   firebase : {
-    apiKey: "AIzaSyBqhDcUdYHrQNaSCZTl3ZC_lmhHC6Hw070",
-    authDomain: "social-inscription.firebaseapp.com",
-    databaseURL: "https://social-inscription.firebaseio.com",
-    projectId: "social-inscription",
-    storageBucket: "social-inscription.appspot.com",
-    messagingSenderId: "246118104802"
+    apiKey: "AIzaSyADdBjOsIO5yvLgWyWUc6oHtQcXL2j-km0",
+    authDomain: "social-inscription-cd393.firebaseapp.com",
+    databaseURL: "https://social-inscription-cd393.firebaseio.com",
+    projectId: "social-inscription-cd393",
+    storageBucket: "social-inscription-cd393.appspot.com",
+    messagingSenderId: "297578059477"
   }
 };
 
