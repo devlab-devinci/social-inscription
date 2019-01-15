@@ -5,6 +5,7 @@ import { Router } from '@angular/router';
 import { first } from 'rxjs/operators';
 import { resolve } from 'q';
 import {MatSnackBar} from '@angular/material';
+import {User} from '../models/User.model';
 
 
 @Injectable({
@@ -42,7 +43,9 @@ export class AuthService {
     firebase.auth().setPersistence(firebase.auth.Auth.Persistence.LOCAL)
     .then(async () => {
       const res = await firebase.auth().signInWithEmailAndPassword(emailLogin, passwordLogin);
-      resolve(res).then(() => {
+      resolve(res).then((result) => {
+        console.log(result, "k  k ");
+        let user = new User();
         this.router.navigate(['/user']);
       });
     })
@@ -50,10 +53,11 @@ export class AuthService {
         this.processErrors(error)
     });
   }
+
   register(emailRegister: any, passwordRegister: any): any {
     firebase.auth().setPersistence(firebase.auth.Auth.Persistence.LOCAL)
     .then(async () => {
-      const res = await firebase.auth().createUserWithEmailAndPassword(emailRegister, emailRegister);
+      const res = await firebase.auth().createUserWithEmailAndPassword(emailRegister, passwordRegister);
       resolve(res);
       this.router.navigate(['/user']);
     })
