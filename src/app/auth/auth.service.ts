@@ -5,12 +5,16 @@ import { Router } from '@angular/router';
 import { first, switchMap } from 'rxjs/operators';
 import { resolve } from 'q';
 import {MatSnackBar} from '@angular/material';
+<<<<<<< HEAD
 import { Observable, of } from 'rxjs';
 import { AngularFirestore, AngularFirestoreDocument } from '@angular/fire/firestore';
 
 import {User} from "../models/User"
 
 
+=======
+import {User} from '../models/User.model';
+>>>>>>> b1df39369d43e562d3565b86c8a86617d0656e03
 
 
 @Injectable({
@@ -56,8 +60,12 @@ export class AuthService {
     firebase.auth().setPersistence(firebase.auth.Auth.Persistence.LOCAL)
     .then(async () => {
       const res = await firebase.auth().signInWithEmailAndPassword(emailLogin, passwordLogin);
+
       resolve(res).then(() => {
         this.updateUserData(res.user)
+      //resolve(res).then((result) => {
+        //console.log(result, "k  k ");
+        //let user = new User();
         this.router.navigate(['/user']);
       });
     })
