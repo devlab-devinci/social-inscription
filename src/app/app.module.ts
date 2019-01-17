@@ -14,6 +14,7 @@ import { AuthService } from './auth/auth.service';
 import { AuthGuard } from './auth/auth.guard';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AngularFireAuthModule } from '@angular/fire/auth';
+import { AngularFirestoreModule } from '@angular/fire/firestore';
 import { TopNavComponent } from './top-nav/top-nav.component';
 import { MatSnackBar } from '@angular/material';
 import {MatSnackBarModule} from '@angular/material/snack-bar';
@@ -40,7 +41,8 @@ import { ForgottenPasswordComponent } from './forgotten-password/forgotten-passw
     FormsModule,
     ReactiveFormsModule,
     AngularFireAuthModule,
-    MatSnackBarModule
+    MatSnackBarModule,
+    AngularFirestoreModule
   ],
   providers: [
     AuthService,

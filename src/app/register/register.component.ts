@@ -39,7 +39,7 @@ export class RegisterComponent implements OnInit {
   }
 
   doRegister(){
-    this.auth.register(this.registerForm.value.email, this.registerForm.value.password)
+    this.auth.register(this.registerForm.value)
   }
 
   get name(){
