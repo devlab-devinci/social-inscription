@@ -5,16 +5,12 @@ import { Router } from '@angular/router';
 import { first, switchMap } from 'rxjs/operators';
 import { resolve } from 'q';
 import {MatSnackBar} from '@angular/material';
-<<<<<<< HEAD
 import { Observable, of } from 'rxjs';
 import { AngularFirestore, AngularFirestoreDocument } from '@angular/fire/firestore';
 
 import {User} from "../models/User"
 
 
-=======
-import {User} from '../models/User.model';
->>>>>>> b1df39369d43e562d3565b86c8a86617d0656e03
 
 
 @Injectable({
@@ -148,4 +144,5 @@ export class AuthService {
   get isUserAuthenticated(): any {
     return this.afAuth.user !== null;
   }
+  
 }
