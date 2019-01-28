@@ -56,7 +56,6 @@ export class AuthService {
     firebase.auth().setPersistence(firebase.auth.Auth.Persistence.LOCAL)
     .then(async () => {
       const res = await firebase.auth().signInWithEmailAndPassword(emailLogin, passwordLogin);
-
       resolve(res).then(() => {
         this.updateUserData(res.user)
       //resolve(res).then((result) => {
@@ -73,8 +72,10 @@ export class AuthService {
   register(userForm): any {
     firebase.auth().setPersistence(firebase.auth.Auth.Persistence.LOCAL)
     .then(async () => {
+      
       const res = await firebase.auth().createUserWithEmailAndPassword(userForm.email, userForm.password);
       resolve(res);
+      
       console.log(res)
       const displayName = `${userForm.surname} ${userForm.name}`
       this.updateUserData(res.user, displayName)
@@ -144,5 +145,5 @@ export class AuthService {
   get isUserAuthenticated(): any {
     return this.afAuth.user !== null;
   }
-  
+
 }
