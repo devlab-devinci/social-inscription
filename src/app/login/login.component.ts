@@ -8,9 +8,9 @@ import { Validators, FormGroup, FormBuilder } from '@angular/forms';
   styleUrls: ['./login.component.scss']
 })
 export class LoginComponent implements OnInit {
-  message:string;
-  constructor(public auth : AuthService, public fb : FormBuilder) { }  
-  loginForm : FormGroup;
+  message: string;
+  constructor(public auth: AuthService, public fb: FormBuilder) { }
+  loginForm: FormGroup;
   ngOnInit() {
     this.loginForm = this.fb.group({
       email : ['', [
@@ -21,22 +21,19 @@ export class LoginComponent implements OnInit {
         Validators.required,
         Validators.pattern('^(?=.*[0-9])(?=.*[a-zA-Z])([a-zA-Z0-9]+)$')
       ]]
-    })
+    });
   }
 
-  doLogin(){
-    this.auth.login(this.loginForm.value.email, this.loginForm.value.password)
+  doLogin() {
+    this.auth.login(this.loginForm.value.email, this.loginForm.value.password);
   }
 
 
-  get email(){
-    return this.loginForm.get('email')
+  get email() {
+    return this.loginForm.get('email');
   }
 
-  get password(){
-    return this.loginForm.get('password')
+  get password() {
+    return this.loginForm.get('password');
   }
-
-  
- 
 }
