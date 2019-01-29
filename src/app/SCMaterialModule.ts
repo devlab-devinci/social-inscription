@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
-import {MatCheckboxModule, MatToolbarModule, MatButtonModule, MatCardModule, MatInputModule, MatDialogModule, MatTableModule, MatMenuModule, MatIconModule, MatProgressSpinnerModule} from '@angular/material';
+import {MatCheckboxModule, MatToolbarModule, MatButtonModule, MatCardModule, MatInputModule, MatDialogModule, MatTableModule, MatMenuModule, MatIconModule, MatProgressSpinnerModule, MatListItem, MatList, MatListModule, MatSlideToggle, MatSlideToggleModule} from '@angular/material';
 import { CommonModule } from '@angular/common';
 
 @NgModule({
@@ -14,7 +14,11 @@ import { CommonModule } from '@angular/common';
   MatMenuModule,
   MatIconModule,
   MatProgressSpinnerModule,
-  MatCheckboxModule
+  MatCheckboxModule,
+  MatListModule,
+  MatSlideToggleModule
+  
+  
   ],
   exports: [
   CommonModule,
@@ -27,7 +31,11 @@ import { CommonModule } from '@angular/common';
    MatMenuModule,
    MatIconModule,
    MatProgressSpinnerModule,
-   MatCheckboxModule
+   MatCheckboxModule,
+   MatList,
+   MatListItem,
+   MatSlideToggle
+   
    ],
 })
 export class SCMaterialModule { }

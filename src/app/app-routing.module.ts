@@ -6,17 +6,35 @@ import { UserComponent } from './user/user.component';
 import { AuthGuard } from './auth/auth.guard';
 import { AppComponent } from './app.component';
 import { ForgottenPasswordComponent } from './forgotten-password/forgotten-password.component';
+import { ProjectsComponent } from './projects/projects.component';
+import { NotAuthGuard } from './auth/notauth.guard';
+import { ProjectsCreateComponent } from './projects-create/projects-create.component';
+import { ProjectsDetailComponent } from './projects-detail/projects-detail.component';
+import { ProjectsEditComponent } from './projects-edit/projects-edit.component';
 
 const routes: Routes = [
-  { path: '', redirectTo : '/login', pathMatch:'full'},
+  { path: '', redirectTo : '/login', pathMatch:'full', canActivate : [NotAuthGuard]},
   { path: 'user', component: UserComponent, canActivate: [AuthGuard]},
-  { path: 'login', component: LoginComponent},
-  { path: 'register', component: RegisterComponent},
-  { path: 'forgotten-password', component: ForgottenPasswordComponent},
+
+
+  { path: 'projects', component: ProjectsComponent, canActivate: [AuthGuard]},
+  { path: 'projects/new', component: ProjectsCreateComponent, canActivate: [AuthGuard]},
+  { path: 'projects/:id', component: ProjectsDetailComponent, canActivate: [AuthGuard]},
+  { path: 'projects/:id/edit', component: ProjectsEditComponent, canActivate: [AuthGuard]},
+
+
+  { path: 'login', component: LoginComponent, canActivate : [NotAuthGuard]},
+  { path: 'register', component: RegisterComponent, canActivate : [NotAuthGuard]},
+  { path: 'forgotten-password', component: ForgottenPasswordComponent, canActivate : [NotAuthGuard]},
 ];
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],
   exports: [RouterModule]
 })
-export class AppRoutingModule { }
+export class AppRoutingModule { 
+
+
+  
+  
+}

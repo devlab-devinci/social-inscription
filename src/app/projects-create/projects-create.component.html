@@ -1,0 +1,30 @@
+<mat-card>
+    <mat-card-title>
+      Créer un projet
+    </mat-card-title>
+  
+    <form [formGroup]="projectForm" class="flex-column" (submit)="createProject()">
+      <mat-form-field>
+        <input formControlName="name" matInput placeholder="Le nom de votre projet">
+        <mat-error *ngIf="name.invalid && name.touched">
+            Le titre est requis
+        </mat-error>
+      </mat-form-field>
+      
+      <mat-form-field>
+        <textarea formControlName="description" matInput placeholder=""></textarea>
+        <mat-error *ngIf="description.invalid && description.touched">
+            La description est requise
+        </mat-error>
+      </mat-form-field>
+      
+      <label formArrayName="availableSubscibeMethods" *ngFor="let subMethod of projectForm.controls.availableSubscibeMethods.controls; let i = index">
+          <mat-slide-toggle [formControlName]="i" > 
+            {{availableSubscibeMethodsInit[i].label}}
+            <!-- <mat-icon matListIcon>{{availableSubscibeMethodsInit[i].iconName}}</mat-icon> -->
+          </mat-slide-toggle>
+        </label>
+      
+      <button type="submit" [disabled]="projectForm.invalid" mat-raised-button>Créer</button>
+    </form>
+  </mat-card>
