@@ -1,5 +1,6 @@
 class Project {
-    uid : string;
-    title : string;
-    imageUrl : string;
+    id : string;
+    name : string;
+    descrption : string;
+    availableSubscibeMethods: any
 }

@@ -1,0 +1,39 @@
+
+<table mat-table [dataSource]="projectService.projects" class="mat-elevation-z8">
+
+    <ng-container matColumnDef="name">
+      <th mat-header-cell *matHeaderCellDef> Nom </th>
+      <td mat-cell *matCellDef="let element"> {{element.name}} </td>
+    </ng-container>
+  
+    <ng-container matColumnDef="description">
+      <th mat-header-cell *matHeaderCellDef> Description </th>
+      <td mat-cell *matCellDef="let element"> {{element.description}} </td>
+    </ng-container>
+  
+    <ng-container matColumnDef="actions">
+      <th mat-header-cell *matHeaderCellDef> Actions </th>
+      <td mat-cell *matCellDef="let element"> 
+        <button mat-raised-button color="primary">  
+          <mat-icon matListIcon>edit</mat-icon> 
+        </button>  
+        <button mat-raised-button color="accent">  
+          <mat-icon matListIcon>delete</mat-icon> 
+        </button>  
+      </td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+  <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+  </table>
+
+
+
+
+
+
+<div class="fab-container">
+  <button mat-fab class="fab" [routerLink]="[ '/projects/new' ]">
+    <mat-icon matListIcon>add</mat-icon>
+  </button>
+</div>
