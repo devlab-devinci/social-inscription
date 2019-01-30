@@ -46,6 +46,11 @@ export class ProjectService {
     })
   }
 
+  deleteProject(project_id:string){
+      let projectDoc = this.afStore.doc<Project>(`projects/${project_id}`)
+      projectDoc.delete();
+  }
+
   get timestamp() {
     return firebase.firestore.FieldValue.serverTimestamp();
   }

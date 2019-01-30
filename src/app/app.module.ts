@@ -24,6 +24,7 @@ import { ProjectsComponent } from './projects/projects.component';
 import { ProjectsDetailComponent } from './projects-detail/projects-detail.component';
 import { ProjectsCreateComponent } from './projects-create/projects-create.component';
 import { ProjectsEditComponent } from './projects-edit/projects-edit.component';
+import { DialogConfirmComponent } from './components/dialog-confirm/dialog-confirm.component';
 
 
 
@@ -39,7 +40,8 @@ import { ProjectsEditComponent } from './projects-edit/projects-edit.component';
     ProjectsComponent,
     ProjectsDetailComponent,
     ProjectsCreateComponent,
-    ProjectsEditComponent
+    ProjectsEditComponent,
+    DialogConfirmComponent
   ],
   imports: [
     BrowserModule,
@@ -58,7 +60,9 @@ import { ProjectsEditComponent } from './projects-edit/projects-edit.component';
     AuthGuard,
     NotAuthGuard,
     MatSnackBar
-  ],
+  ],  
+  entryComponents: [DialogConfirmComponent],
+
   bootstrap: [AppComponent]
 })
 export class AppModule { }
