@@ -19,8 +19,6 @@ import { TopNavComponent } from './top-nav/top-nav.component';
 import { MatSnackBar } from '@angular/material';
 import {MatSnackBarModule} from '@angular/material/snack-bar';
 import { ForgottenPasswordComponent } from './forgotten-password/forgotten-password.component';
-import { ProjectComponentComponent } from './project-component/project-component.component';
-import { ProjectComponent } from './project/project.component';
 import { NotAuthGuard } from './auth/notauth.guard';
 import { ProjectsComponent } from './projects/projects.component';
 import { ProjectsDetailComponent } from './projects-detail/projects-detail.component';
@@ -38,8 +36,6 @@ import { ProjectsEditComponent } from './projects-edit/projects-edit.component';
     UserComponent,
     TopNavComponent,
     ForgottenPasswordComponent,
-    ProjectComponentComponent,
-    ProjectComponent,
     ProjectsComponent,
     ProjectsDetailComponent,
     ProjectsCreateComponent,
