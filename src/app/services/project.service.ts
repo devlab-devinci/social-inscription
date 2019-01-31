@@ -3,7 +3,7 @@ import { AngularFirestore, AngularFirestoreCollection } from '@angular/fire/fire
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import * as firebase from 'firebase';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 import { AuthService } from '../auth/auth.service';
 import { AngularFireAuth } from '@angular/fire/auth';
 
@@ -14,13 +14,18 @@ import { AngularFireAuth } from '@angular/fire/auth';
 export class ProjectService {
   private projectsCollection: AngularFirestoreCollection<Project>;
   projects: Observable<Project[]>;
+  project: Observable<Project>;
   constructor(
     public afStore: AngularFirestore,
     public afAuth: AuthService,
     public router: Router,
+    private route: ActivatedRoute,
   ) {
-    this.projectsCollection = afStore.collection('projects', ref => ref.where("members", "array-contains", this.afAuth.authState.uid));
-    this.projects = this.projectsCollection.snapshotChanges().pipe(
+    this.projectsCollection = this.afStore.collection('projects', ref => ref.where("members", "array-contains", this.afAuth.authState.uid));
+  }
+
+  getUserProjects(){
+    return this.projectsCollection.snapshotChanges().pipe(
       map(actions => actions.map(data => {
         const project = data.payload.doc.data() as Project
         const id = data.payload.doc.id
