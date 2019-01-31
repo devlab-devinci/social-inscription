@@ -1,3 +1,28 @@
-<p>
-  projects-edit works!
-</p>
+<mat-card>
+  <mat-card-title *ngIf="project">
+    Editer {{project.name}}
+  </mat-card-title>
+
+  <form *ngIf="projectForm" [formGroup]="projectForm" class="flex-column" (submit)="editProject()">
+    <mat-form-field>
+      <input formControlName="name" matInput placeholder="Le nom de votre projet">
+      <mat-error *ngIf="name.invalid && name.touched">
+          Le titre est requis
+      </mat-error>
+    </mat-form-field>
+    
+    <mat-form-field>
+      <textarea formControlName="description" matInput placeholder="La descritpion de votre projet"></textarea>
+      <mat-error *ngIf="description.invalid && description.touched">
+          La description est requise
+      </mat-error>
+    </mat-form-field>
+    <label formArrayName="availableSubscribeMethods" *ngFor="let subMethod of projectForm.controls.availableSubscribeMethods.controls; let i = index">
+        <mat-slide-toggle [formControlName]="i" > 
+          {{subMethods[i].label}}
+          <!-- <mat-icon matListIcon>{{subMethods[i].iconName}}</mat-icon> -->
+        </mat-slide-toggle>
+      </label>
+    <button type="submit" [disabled]="projectForm.invalid" mat-raised-button>Mettre a jour</button>
+  </form>
+</mat-card>

@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, FormControl, FormArray } from '@angular/forms';
 import { ProjectService } from '../services/project.service';
+import {availableSubscribeMethodsInit} from '../models/availableSubscribeMethods'
 
 @Component({
   selector: 'app-projects-create',
@@ -9,18 +10,12 @@ import { ProjectService } from '../services/project.service';
 })
 export class ProjectsCreateComponent implements OnInit {
   constructor(public fb : FormBuilder, public projectService : ProjectService) { }  
-  availableSubscibeMethodsInit = [{
-      iconName : "google",
-      label : "Google"
-    },
-    {
-      iconName : "facebook",
-      label : "Facebook"
-    },
-  ]
+  
   projectForm : FormGroup;
+  subMethods: any;
   ngOnInit() {
-    const availableSubscibeMethodsControls = this.availableSubscibeMethodsInit.map(c => new FormControl(false));
+    this.subMethods = availableSubscribeMethodsInit;
+    const availableSubscribeMethodsInitControls = availableSubscribeMethodsInit.map(c => new FormControl(false));
 
     this.projectForm = this.fb.group({
       name : ['', [
@@ -29,7 +24,7 @@ export class ProjectsCreateComponent implements OnInit {
       description : ['', [
         Validators.required,
       ]],
-      availableSubscibeMethods : new FormArray(availableSubscibeMethodsControls),
+      availableSubscribeMethods : new FormArray(availableSubscribeMethodsInitControls),
       members : [[], []]
     })
   }
@@ -45,8 +40,8 @@ public async createProject(){
   get description(){
     return this.projectForm.get('description')
   }
-  get availableSubscibeMethods(){
-    return this.projectForm.get('availableSubscibeMethods')
+  get availableSubscribeMethodsInit(){
+    return this.projectForm.get('availableSubscribeMethodsInit')
   }
 
 
