@@ -25,6 +25,7 @@ import { ProjectsDetailComponent } from './projects-detail/projects-detail.compo
 import { ProjectsCreateComponent } from './projects-create/projects-create.component';
 import { ProjectsEditComponent } from './projects-edit/projects-edit.component';
 import { DialogConfirmComponent } from './components/dialog-confirm/dialog-confirm.component';
+import { MatGridListModule } from '@angular/material';
 
 
 
@@ -53,7 +54,8 @@ import { DialogConfirmComponent } from './components/dialog-confirm/dialog-confi
     ReactiveFormsModule,
     AngularFireAuthModule,
     MatSnackBarModule,
-    AngularFirestoreModule
+    AngularFirestoreModule,
+    MatGridListModule
   ],
   providers: [
     AuthService,
