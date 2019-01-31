@@ -12,7 +12,7 @@ import { Observable } from 'rxjs';
 export class ProjectsComponent implements OnInit {
   public displayedColumns: Array<string>;
   public projects: Observable<Project[]>;
-  public search: string;
+
   constructor(
     public projectService: ProjectService,
     public dialog: MatDialog

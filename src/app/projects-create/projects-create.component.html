@@ -17,11 +17,10 @@
             La description est requise
         </mat-error>
       </mat-form-field>
-      
-      <label formArrayName="availableSubscibeMethods" *ngFor="let subMethod of projectForm.controls.availableSubscibeMethods.controls; let i = index">
+      <label formArrayName="availableSubscribeMethods" *ngFor="let subMethod of projectForm.controls.availableSubscribeMethods.controls; let i = index">
           <mat-slide-toggle [formControlName]="i" > 
-            {{availableSubscibeMethodsInit[i].label}}
-            <!-- <mat-icon matListIcon>{{availableSubscibeMethodsInit[i].iconName}}</mat-icon> -->
+            {{subMethods[i].label}}
+            <!-- <mat-icon matListIcon>{{subMethods[i].iconName}}</mat-icon> -->
           </mat-slide-toggle>
         </label>
       

@@ -1,8 +1,4 @@
 
-<mat-form-field>
-  <input [(ngModel)]="search" matInput placeholder="Rechercher" type="search">
-</mat-form-field>
-
 <table mat-table [dataSource]="projects" class="mat-elevation-z8">
     <ng-container matColumnDef="name">
       <th mat-header-cell *matHeaderCellDef> Nom </th>
@@ -32,12 +28,7 @@
     <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
   <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
   </table>
-
-
-
-
-
-
+  
 <div class="fab-container">
   <button mat-fab class="fab" [routerLink]="[ '/projects/new' ]">
     <mat-icon matListIcon>add</mat-icon>
