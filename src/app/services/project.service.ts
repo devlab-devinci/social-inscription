@@ -85,6 +85,7 @@ export class ProjectService {
      )
     //return this.projectsCollection.doc(project_id).valueChanges();
   }
+  
 
   get timestamp() {
     return firebase.firestore.FieldValue.serverTimestamp();
