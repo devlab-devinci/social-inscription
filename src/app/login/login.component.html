@@ -1,34 +1,47 @@
 <mat-card>
-  <mat-card-title>
-    Connexion
-  </mat-card-title>
+  <mat-card-header>
+    <mat-card-title>
+      Connexion
+    </mat-card-title>
+  </mat-card-header>
 
-  <form [formGroup]="loginForm" class="flex-column" (submit)="doLogin()">
-    <mat-form-field>
-      <input formControlName="email" matInput placeholder="Votre addresse email">
-      <mat-error *ngIf="email.invalid && email.touched">
+  <mat-card-content>
+    <form [formGroup]="loginForm" class="flex-column" (submit)="doLogin()">
+      <mat-form-field>
+        <input formControlName="email" matInput placeholder="Votre addresse email">
+        <mat-error *ngIf="email.invalid && email.touched">
           Votre email est incorrect
-      </mat-error>
-    </mat-form-field>
-    
-    <mat-form-field>
-      <input formControlName="password" matInput placeholder="Votre mot de passe" type="password">
-      <mat-hint align="end">
-        Votre mot de passe contient au moins une lettre en un chiffre
-      </mat-hint>
-      <mat-error *ngIf="password.invalid && password.touched">
+        </mat-error>
+      </mat-form-field>
+
+      <mat-form-field>
+        <input formControlName="password" matInput placeholder="Votre mot de passe" type="password">
+        <mat-hint align="end">
+          Votre mot de passe contient au moins une lettre en un chiffre
+        </mat-hint>
+        <mat-error *ngIf="password.invalid && password.touched">
           Votre mot de passe est incorrect
-      </mat-error>
-    </mat-form-field>
-    
-    <button type="submit" [disabled]="loginForm.invalid" mat-raised-button>Connexion</button>
-  </form>
-  <hr>
-  <a [routerLink]="[ '/register']">Je n'ai pas encore de compte</a>   
-  <a [routerLink]="['/forgotten-password']">J'ai oublié mon mon de passe</a>
+        </mat-error>
+      </mat-form-field>
 
-
-  <mat-card-actions>
-    <button mat-raised-button (click)="auth.googleLogin()">Login with google</button>
-  </mat-card-actions>
+      <button type="submit" [disabled]="loginForm.invalid" mat-raised-button>Connexion</button>
+    </form>
+    <mat-grid-list cols="3" rowHeight="4em">
+      <mat-grid-tile colspan="1">
+        <mat-card-actions>
+          <button mat-raised-button (click)="auth.googleLogin()">Connexion avec Google</button>
+        </mat-card-actions>
+      </mat-grid-tile>
+      <mat-grid-tile colspan="1">
+        <mat-card-actions>
+          <a [routerLink]="[ '/register']">Je n'ai pas encore de compte</a>
+        </mat-card-actions>
+      </mat-grid-tile>
+      <mat-grid-tile colspan="1">
+        <mat-card-actions>
+          <a [routerLink]="['/forgotten-password']">J'ai oublié mon mon de passe</a>
+        </mat-card-actions>
+      </mat-grid-tile>
+    </mat-grid-list>
+  </mat-card-content>
 </mat-card>
