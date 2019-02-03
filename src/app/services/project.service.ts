@@ -5,6 +5,7 @@ import { map, tap, take } from 'rxjs/operators';
 import * as firebase from 'firebase';
 import { Router, ActivatedRoute } from '@angular/router';
 import { AuthService } from '../auth/auth.service';
+import { UserService } from '../services/user.service';
 import { AngularFireAuth } from '@angular/fire/auth';
 
 @Injectable({
@@ -20,6 +21,7 @@ export class ProjectService {
     public afAuth: AuthService,
     public router: Router,
     private route: ActivatedRoute,
+    private userService: UserService
   ) {
     this.projectsCollection = this.afStore.collection('projects', ref => ref.where("members", "array-contains", this.afAuth.authState.uid));
   }
@@ -51,12 +53,11 @@ export class ProjectService {
     })
   }
 
-  public async editProject(project, project_id) {
+  public async editProject(project, project_id, newMembre_id = null) {
     //TODO : Add the possibilty to add memebers to a projects when creating it
-    project.members = [
-      this.afAuth.authState.uid,
-      ...project.members
-    ];
+    if(newMembre_id != null){
+      project.members.push(newMembre_id);
+    }
 
     await this.afStore.doc<Project>(`projects/${project_id}`).set({
       createdAt: this.timestamp,
@@ -77,7 +78,7 @@ export class ProjectService {
 
   getProject(project_id: string) {
     return this.projectsCollection.doc(project_id).get().pipe(
-      map(res => { 
+      map(res => {
         if(!res.exists)
           this.router.navigate(['/projects'])
         return {... res.data() as Project, id : res.id}
@@ -86,6 +87,13 @@ export class ProjectService {
     //return this.projectsCollection.doc(project_id).valueChanges();
   }
   
+
+  addMember(email: string, project: Project) {
+      const user = this.userService.getMemberByEmail(email);
+      if(user != null){
+        this.editProject(project, project.id, user );
+      }
+  }
 
   get timestamp() {
     return firebase.firestore.FieldValue.serverTimestamp();

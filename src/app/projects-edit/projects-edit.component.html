@@ -23,6 +23,44 @@
           <!-- <mat-icon matListIcon>{{subMethods[i].iconName}}</mat-icon> -->
         </mat-slide-toggle>
       </label>
+
+
+
+
     <button type="submit" [disabled]="projectForm.invalid" mat-raised-button>Mettre a jour</button>
   </form>
+
+  <table id="customers">
+    <tr>
+      <th>Membre du projet</th>
+      <th id="actions">Actions</th>
+    </tr>
+    <tr>
+      <td>Alfreds Futterkiste</td>
+      <td>
+        <button mat-raised-button color="accent" >
+          <mat-icon matListIcon>delete</mat-icon>
+        </button>
+      </td>
+    </tr>
+    <tr>
+      <td>Berglunds snabbköp</td>
+      <td>
+        <button mat-raised-button color="accent" >
+          <mat-icon matListIcon>delete</mat-icon>
+        </button>
+      </td>
+    </tr>
+  </table>
+
+  <form (ngSubmit)="addMemberProject(f)" #f="ngForm">
+    <mat-form-field>
+      <input name="email"  ngModel required  [email]="true" matInput placeholder="Email de l'utilisateur">
+      <input name="email"  ngModel required  [email]="true" matInput placeholder="Email de l'utilisateur">
+
+      <button type="submit" [disabled]="f.invalid" mat-raised-button>Ajouter un membre</button>
+    </mat-form-field>
+  </form>
 </mat-card>
+
+
