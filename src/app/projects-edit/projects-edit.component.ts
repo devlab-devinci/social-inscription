@@ -4,6 +4,7 @@ import { Observable, Subscription } from 'rxjs';
 import { ActivatedRoute } from '@angular/router';
 import { FormGroup, FormBuilder, FormControl, Validators, FormArray } from '@angular/forms';
 import { availableSubscribeMethodsInit } from '../models/availableSubscribeMethods'
+import {NgForm} from '@angular/forms';
 
 @Component({
   selector: 'app-projects-edit',
@@ -12,6 +13,7 @@ import { availableSubscribeMethodsInit } from '../models/availableSubscribeMetho
 })
 export class ProjectsEditComponent implements OnInit, OnDestroy {
   projectForm: FormGroup;
+  addMember: FormGroup;
   subMethods: any;
   public project;
   public projectSub: Subscription
@@ -25,7 +27,7 @@ export class ProjectsEditComponent implements OnInit, OnDestroy {
         this.project =  res;
 
         this.subMethods = availableSubscribeMethodsInit;
-        const availableSubscribeMethodsInitControls = availableSubscribeMethodsInit.map((c, index) => { 
+        const availableSubscribeMethodsInitControls = availableSubscribeMethodsInit.map((c, index) => {
           return new FormControl(this.project.availableSubscribeMethods[index])
         });
         this.projectForm = this.fb.group({
@@ -38,6 +40,12 @@ export class ProjectsEditComponent implements OnInit, OnDestroy {
           availableSubscribeMethods: new FormArray(availableSubscribeMethodsInitControls),
           members: [[], []]
         })
+
+
+
+          this.addMember = new FormGroup({
+              email: new FormControl( 'text',[ Validators.required, Validators.email ])
+          });
       })
     })
   }
@@ -48,7 +56,13 @@ export class ProjectsEditComponent implements OnInit, OnDestroy {
 
 
   ngOnDestroy() {
-    this.projectSub.unsubscribe()
+    this.projectSub.unsubscribe() ;
+  }
+
+
+
+  addMemberProject(form: NgForm) {
+    this.projectService.addMember(form.value['email'], this.project);
   }
 
   public editProject() {
