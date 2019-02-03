@@ -1,7 +1,7 @@
-import {Deserializable} from './deserializable.model';
+//import {Deserializable} from './deserializable.model';
 import {AuthService} from '../auth/auth.service';
 
-export class User implements Deserializable {
+export class User /* implements Deserializable */ { 
 
     private  id: number;
     private  email: string;

@@ -7,7 +7,7 @@ import { resolve } from 'q';
 import {AuthService} from '../auth/auth.service';
 import { AngularFirestore, AngularFirestoreCollection } from '@angular/fire/firestore';
 import { Observable } from 'rxjs';
-import { map, tap, take } from 'rxjs/operators';
+import { map, tap, take, reduce } from 'rxjs/operators';
 import {User} from "../models/User.model";
 
 
@@ -61,14 +61,12 @@ export class UserService {
   }
 */
   getMemberByEmail(email){
-      this.getMembers().subscribe(res => {
-        res.forEach(function (user) {
-            if( email == user['email']){
-               console.log('trouvé');
-            }
-        })
-      });
-
+      return this.afStore.collection('users', ref => ref.where('email',  '==', email)).snapshotChanges().pipe(
+        map(actions => actions.map(data => {
+          return  data.payload.doc.exists && { id : data.payload.doc.id, ...data.payload.doc.data() as User }
+        }))
+      )
+      
   }
 
 

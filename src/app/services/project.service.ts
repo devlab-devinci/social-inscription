@@ -89,10 +89,22 @@ export class ProjectService {
   
 
   addMember(email: string, project: Project) {
-      const user = this.userService.getMemberByEmail(email);
-      if(user != null){
-        this.editProject(project, project.id, user );
-      }
+      const userSub  = this.userService.getMemberByEmail(email);
+      userSub.subscribe(res => 
+        {
+          if(res.length == 0){
+            /**
+             * Affiche ton un message d'erreur
+             */
+            return;
+          }
+
+          return res.map(
+            user => {
+            this.editProject(project, project.id, user );
+      })
+    })
+      
   }
 
   get timestamp() {
