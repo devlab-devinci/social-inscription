@@ -6,8 +6,10 @@ import { first } from 'rxjs/operators';
 import { resolve } from 'q';
 import {AuthService} from '../auth/auth.service';
 import { AngularFirestore, AngularFirestoreCollection } from '@angular/fire/firestore';
-import { Observable } from 'rxjs';
+import { Observable, of } from 'rxjs';
 import { map, tap, take, reduce } from 'rxjs/operators';
+import {forkJoin} from 'rxjs';
+
 import {User} from "../models/User.model";
 
 
@@ -16,6 +18,7 @@ import {User} from "../models/User.model";
   providedIn: 'root'
 })
 export class UserService {
+  
 
   private usersCollection: AngularFirestoreCollection<Project>;
   users: Observable<User[]>;
@@ -32,6 +35,16 @@ export class UserService {
   }
 
 
+
+  getMembersByArray(user_ids : Array<string>): any {
+    let users = [];
+     user_ids.map(user_id => {
+        return this.usersCollection.doc(user_id).valueChanges().subscribe(res => {
+          users.push(res)
+        })
+    });
+    return users
+  }
 
   //Ici c'est pas mal mais t'as un soucis, la tu lui dis "si tu existe pas, retoure moi ça"
   getMember(uid) {
@@ -63,7 +76,7 @@ export class UserService {
   getMemberByEmail(email){
       return this.afStore.collection('users', ref => ref.where('email',  '==', email)).snapshotChanges().pipe(
         map(actions => actions.map(data => {
-          return  data.payload.doc.exists && { id : data.payload.doc.id, ...data.payload.doc.data() as User }
+          return  data.payload.doc.exists && { uid : data.payload.doc.id, ...data.payload.doc.data() as User }
         }))
       )
       

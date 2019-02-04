@@ -25,6 +25,7 @@ export class ProjectsEditComponent implements OnInit, OnDestroy {
     this.route.params.subscribe(params => {
       this.projectSub = this.projectService.getProject(params['id']).subscribe(res => {
         this.project =  res;
+        console.log(this.project)
 
         this.subMethods = availableSubscribeMethodsInit;
         const availableSubscribeMethodsInitControls = availableSubscribeMethodsInit.map((c, index) => {

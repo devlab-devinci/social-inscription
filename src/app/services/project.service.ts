@@ -1,12 +1,11 @@
 import { Injectable } from '@angular/core';
 import { AngularFirestore, AngularFirestoreCollection } from '@angular/fire/firestore';
 import { Observable } from 'rxjs';
-import { map, tap, take } from 'rxjs/operators';
+import { map } from 'rxjs/operators';
 import * as firebase from 'firebase';
 import { Router, ActivatedRoute } from '@angular/router';
 import { AuthService } from '../auth/auth.service';
 import { UserService } from '../services/user.service';
-import { AngularFireAuth } from '@angular/fire/auth';
 
 @Injectable({
   providedIn: 'root'
@@ -55,20 +54,18 @@ export class ProjectService {
 
   public async editProject(project, project_id, newMembre_id = null) {
     //TODO : Add the possibilty to add memebers to a projects when creating it
-    if(newMembre_id != null){
+    if (newMembre_id != null) {
       project.members.push(newMembre_id);
     }
 
     await this.afStore.doc<Project>(`projects/${project_id}`).set({
-      createdAt: this.timestamp,
       updatedAt: this.timestamp,
       creator: this.afAuth.authState.uid,
       subscribers: [],
       ...project
     })
+
     this.router.navigate([`/projects/${project_id}`])
-
-
   }
 
   deleteProject(project_id: string) {
@@ -79,32 +76,40 @@ export class ProjectService {
   getProject(project_id: string) {
     return this.projectsCollection.doc(project_id).get().pipe(
       map(res => {
-        if(!res.exists)
+        if (!res.exists)
           this.router.navigate(['/projects'])
-        return {... res.data() as Project, id : res.id}
+        const project_data = res.data() as Project;
+        project_data.members = this.userService.getMembersByArray(project_data.members);
+        project_data.subscribers = this.userService.getMembersByArray(project_data.subscribers);
+        return {
+          ...project_data,
+          id: res.id
+        }
       })
-     )
+    )
     //return this.projectsCollection.doc(project_id).valueChanges();
   }
-  
+
 
   addMember(email: string, project: Project) {
-      const userSub  = this.userService.getMemberByEmail(email);
-      userSub.subscribe(res => 
-        {
-          if(res.length == 0){
-            /**
-             * Affiche ton un message d'erreur
-             */
-            return;
-          }
+    const userSub = this.userService.getMemberByEmail(email);
+    userSub.subscribe(res => {
+      if (res.length == 0) {
+        /**
+         * Affiche ton un message d'erreur
+         */
+        return;
+      }
 
-          return res.map(
-            user => {
-            this.editProject(project, project.id, user );
-      })
+      return res.map(
+        user => {
+          this.projectsCollection.doc(project.id).update({
+            "members" : [...project.members.map(res => res.uid), user.uid]
+          })
+          //this.editProject(project, project.id, user);
+        })
     })
-      
+
   }
 
   get timestamp() {
