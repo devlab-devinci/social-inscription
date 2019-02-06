@@ -1,0 +1,39 @@
+.flex-column{
+  display: flex;
+  flex-direction: column;
+}
+
+
+
+mat-card-actions{
+  margin-top: 2em;
+}
+
+#rgpd_check{
+  padding: 10px;
+}
+
+@media (max-width: 576px) {
+  mat-card{
+    width: 100%;
+    margin: auto;
+    padding: 10px;
+  }
+}
+
+@media (min-width: 768px) {
+  mat-card{
+    width: 80%;
+    margin: auto;
+    padding: 10px;
+  }
+}
+
+@media (min-width: 992px) {
+  mat-card{
+    width: 50%;
+    margin: auto;
+    padding: 30px;
+    margin-top: 7%;
+  }
+}
