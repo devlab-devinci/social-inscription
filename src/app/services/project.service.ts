@@ -1,12 +1,11 @@
 import { Injectable } from '@angular/core';
 import { AngularFirestore, AngularFirestoreCollection } from '@angular/fire/firestore';
 import { Observable } from 'rxjs';
-import { map, tap, take } from 'rxjs/operators';
+import { map } from 'rxjs/operators';
 import * as firebase from 'firebase';
 import { Router, ActivatedRoute } from '@angular/router';
 import { AuthService } from '../auth/auth.service';
 import { UserService } from '../services/user.service';
-import { AngularFireAuth } from '@angular/fire/auth';
 
 @Injectable({
   providedIn: 'root'
@@ -56,11 +55,10 @@ export class ProjectService {
   public async editProject(project, project_id, newUserMember = null) {
 
     if(newUserMember != null){
-       project.members = newUserMember;
+      project.members = newUserMember;
     }
 
     await this.afStore.doc<Project>(`projects/${project_id}`).set({
-      createdAt: this.timestamp,
       updatedAt: this.timestamp,
       creator: this.afAuth.authState.uid,
       subscribers: [],
@@ -68,13 +66,10 @@ export class ProjectService {
     })
 
     if(newUserMember == null){
-        this.router.navigate([`/projects/${project_id}`])
+      this.router.navigate([`/projects/${project_id}`])
     } else {
-        this.router.navigate([`/projects/${project_id}/edit`])
+      this.router.navigate([`/projects/${project_id}/edit`])
     }
-
-
-
   }
 
   deleteProject(project_id: string) {
@@ -85,49 +80,22 @@ export class ProjectService {
   getProject(project_id: string) {
     return this.projectsCollection.doc(project_id).get().pipe(
       map(res => {
-        if(!res.exists)
+        if (!res.exists)
           this.router.navigate(['/projects'])
-          return {... res.data() as Project, id : res.id}
+        const project_data = res.data() as Project;
+        project_data.members = this.userService.getMembersByArray(project_data.members);
+        project_data.subscribers = this.userService.getMembersByArray(project_data.subscribers);
+        return {
+          ...project_data,
+          id: res.id
+        }
       })
-     )
+    )
     //return this.projectsCollection.doc(project_id).valueChanges();
   }
-  
+
 
   public addMember(email: string, project: Project) {
-      const userSub  = this.userService.getMemberByEmail(email);
-
-      userSub.subscribe(res => 
-        {
-
-          if(res.length == 0){
-            /**
-             * Affiche ton un message d'erreur todo
-             */
-            console.log('membre innexistant');
-            return;
-          }
-
-          return res.map(
-            async user => {
-              if(project.members.indexOf(user['uid']) > -1){
-                /**
-                 * Message erreur todo
-                 */
-                console.log('membre déjà dans le projet');
-                return;
-              }
-              project.members.push(user['uid']);
-
-            this.editProject(project, project.id,  project.members );
-      })
-    })
-      
-  }
-
-
-  public deleteMember(email: string, project: Project) {
-    console.log(project);
     const userSub  = this.userService.getMemberByEmail(email);
 
     userSub.subscribe(res =>
@@ -143,9 +111,47 @@ export class ProjectService {
 
       return res.map(
         async user => {
-          console.log(user['uid']);
-          console.log( project.members);
-          if( project.members.indexOf(user['uid']) == -1 ){
+          if(project.members.indexOf(user['uid']) > -1){
+            /**
+             * Message erreur todo
+             */
+            console.log('membre déjà dans le projet');
+            return;
+          }
+          const newMembers = [];
+          project.members.forEach( (member)=> {
+            newMembers.push(member.uid);
+          });
+          newMembers.push(user['uid']);
+
+          this.editProject(project, project.id,  newMembers );
+        })
+    })
+
+  }
+
+
+  public deleteMember(email: string, project: Project) {
+    console.log(email);
+    console.log(project);
+
+    const userSub  = this.userService.getMemberByEmail(email);
+
+    userSub.subscribe(res =>
+    {
+
+      if(res.length == 0){
+        /**
+         * Affiche ton un message d'erreur todo
+         */
+        console.log('membre innexistant');
+        return;
+      }
+
+      return res.map(
+        async user => {
+
+          if( project.members.indexOf(user['uid']) != -1 ){
             /**
              * Message erreur todo
              */
@@ -155,10 +161,12 @@ export class ProjectService {
 
 
           var saveMember = [];
-          project.members.forEach(function (uid) {
-             if( uid != user['uid']){
-               saveMember.push(uid);
-             }
+
+          project.members.forEach(function (member) {
+            if( member.uid != user['uid']){
+
+              saveMember.push(member['uid']);
+            }
           });
 
           this.editProject(project, project.id, saveMember );

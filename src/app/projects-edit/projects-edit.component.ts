@@ -9,6 +9,7 @@ import {UserService} from "../services/user.service";
 import {map} from "rxjs/operators";
 import {User} from "../models/User.model";
 
+
 @Component({
   selector: 'app-projects-edit',
   templateUrl: './projects-edit.component.html',
@@ -20,7 +21,7 @@ export class ProjectsEditComponent implements OnInit, OnDestroy {
   subMethods: any;
   public project;
   public projectSub: Subscription;
-  public usersProject : object[] = [] ;
+
 
 
   constructor(
@@ -31,14 +32,6 @@ export class ProjectsEditComponent implements OnInit, OnDestroy {
     this.route.params.subscribe(params => {
       this.projectSub = this.projectService.getProject(params['id']).subscribe(res => {
         this.project =  res;
-
-
-        res.members.forEach((uid) => {
-          this.userService.getMember(uid).subscribe(res => {
-            this.usersProject.push(res);
-          });
-        });
-        console.log(this.usersProject);
 
         this.subMethods = availableSubscribeMethodsInit;
         const availableSubscribeMethodsInitControls = availableSubscribeMethodsInit.map((c, index) => {
