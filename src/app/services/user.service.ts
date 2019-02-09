@@ -42,7 +42,19 @@ export class UserService {
     )
   }
 
-  getMembers() {
+  getMembers(arrUid) {
+    const users  = [];
+    arrUid.forEach((uid) => {
+      return this.usersCollection.doc(uid).get().pipe(
+        map(res => {
+          users.push({... res.data() as User, id : res.id})
+        })
+      )
+    });
+    return users;
+  }
+
+  getAllMembers() {
     return this.usersCollection.snapshotChanges().pipe(
       map(actions => actions.map(data => {
         const project = data.payload.doc.data() as Project
@@ -66,8 +78,9 @@ export class UserService {
           return  data.payload.doc.exists && { id : data.payload.doc.id, ...data.payload.doc.data() as User }
         }))
       )
-      
   }
+
+
 
 
 

@@ -10,7 +10,7 @@
           Le titre est requis
       </mat-error>
     </mat-form-field>
-    
+
     <mat-form-field>
       <textarea formControlName="description" matInput placeholder="La descritpion de votre projet"></textarea>
       <mat-error *ngIf="description.invalid && description.touched">
@@ -18,7 +18,7 @@
       </mat-error>
     </mat-form-field>
     <label formArrayName="availableSubscribeMethods" *ngFor="let subMethod of projectForm.controls.availableSubscribeMethods.controls; let i = index">
-        <mat-slide-toggle [formControlName]="i" > 
+        <mat-slide-toggle [formControlName]="i" >
           {{subMethods[i].label}}
           <!-- <mat-icon matListIcon>{{subMethods[i].iconName}}</mat-icon> -->
         </mat-slide-toggle>
@@ -30,34 +30,26 @@
     <button type="submit" [disabled]="projectForm.invalid" mat-raised-button>Mettre a jour</button>
   </form>
 
-  <table id="customers">
+  <table id="customers" *ngIf="project">
     <tr>
       <th>Membre du projet</th>
       <th id="actions">Actions</th>
     </tr>
-    <tr>
-      <td>Alfreds Futterkiste</td>
+
+    <tr *ngFor="let user of usersProject ">
+      <td>{{ user.email}}</td>
       <td>
-        <button mat-raised-button color="accent" >
-          <mat-icon matListIcon>delete</mat-icon>
+        <button mat-raised-button color="accent" type="submit" >
+          <mat-icon matListIcon (click)="deleteMemberProject(user.email)">delete</mat-icon>
         </button>
       </td>
     </tr>
-    <tr>
-      <td>Berglunds snabbköp</td>
-      <td>
-        <button mat-raised-button color="accent" >
-          <mat-icon matListIcon>delete</mat-icon>
-        </button>
-      </td>
-    </tr>
+
   </table>
 
   <form (ngSubmit)="addMemberProject(f)" #f="ngForm">
     <mat-form-field>
       <input name="email"  ngModel required  [email]="true" matInput placeholder="Email de l'utilisateur">
-      <input name="email"  ngModel required  [email]="true" matInput placeholder="Email de l'utilisateur">
-
       <button type="submit" [disabled]="f.invalid" mat-raised-button>Ajouter un membre</button>
     </mat-form-field>
   </form>

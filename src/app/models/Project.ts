@@ -3,4 +3,6 @@ class Project {
     name : string;
     descrption : string;
     availableSubscribeMethods: Array<any>
+    members: Array<any>
+    creator: string;
 }
