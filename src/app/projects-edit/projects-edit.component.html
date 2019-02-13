@@ -39,7 +39,7 @@
       <td>{{member.displayName}}</td>
       <td>{{member.email}}</td>
       <td>
-        <button mat-raised-button color="accent" >
+        <button *ngIf="member.uid != project.creator" mat-raised-button color="accent" >
           <mat-icon matListIcon (click)="deleteMemberProject(member.email)">delete</mat-icon>
         </button>
       </td>
