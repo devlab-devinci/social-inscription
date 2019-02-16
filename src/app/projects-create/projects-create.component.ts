@@ -5,6 +5,7 @@ import { UserService } from '../services/user.service';
 import {availableSubscribeMethodsInit} from '../models/availableSubscribeMethods'
 import {AuthService} from "../auth/auth.service";
 import {forEach} from "@angular/router/src/utils/collection";
+import { FlashMessage } from '../services/flashMessage.service';
 
 @Component({
   selector: 'app-projects-create',
@@ -13,7 +14,7 @@ import {forEach} from "@angular/router/src/utils/collection";
 })
 export class ProjectsCreateComponent implements OnInit {
 
-  constructor(public fb : FormBuilder, public projectService : ProjectService, public userService : UserService ,  public afAuth: AuthService) { }
+  constructor(public fb : FormBuilder, public flashService :FlashMessage, public projectService : ProjectService, public userService : UserService ,  public afAuth: AuthService) {}
   creator = this.afAuth.authState;
   memberProject =  [this.creator];
   projectForm : FormGroup;
@@ -60,10 +61,7 @@ public async createProject(){
 
     user.subscribe(res => {
       if(res.length == 0){
-        /**
-         * Affiche ton un message d'erreur todo
-         */
-        console.log('membre innexistant');
+        this.flashService.setMessage('Le membre est inexistant');
         return;
       }
 
@@ -72,14 +70,13 @@ public async createProject(){
           var check = 1;
           this.memberProject.forEach(member => {
             if(member.uid == user.uid){
-              console.log('membre déjà dans le projet');
               check = 0;
             }
           });
           if(check){
             this.memberProject.push(user);
           } else {
-            //TODO
+            this.flashService.setMessage('Le membre est déjà dans le projet');
           }
         })
     })
@@ -89,7 +86,7 @@ public async createProject(){
   deleteMemberProject(member){
 
      if(member.uid == this.creator.uid){
-       console.log('impossible de supprimer le créateur d un projet');
+       this.flashService.setMessage('Impossible de supprimer le créateur d un projet');
        return;
      }
      const newArray = [];
