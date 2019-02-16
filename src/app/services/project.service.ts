@@ -37,10 +37,6 @@ export class ProjectService {
 
   public createProject(project) {
     //TODO : Add the possibilty to add memebers to a projects when creating it
-    project.members = [
-      this.afAuth.authState.uid,
-      ...project.members
-    ];
     this.projectsCollection.add({
       createdAt: this.timestamp,
       updatedAt: this.timestamp,

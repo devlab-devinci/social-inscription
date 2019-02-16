@@ -35,6 +35,12 @@ export class ProjectsCreateComponent implements OnInit {
   }
 
 public async createProject(){
+  this.memberProject.forEach( (member) => {
+    if( this.projectForm.value.members.indexOf(member.uid)){
+      this.projectForm.value.members.push(member.uid);
+    }
+  });
+
   this.projectService.createProject(this.projectForm.value);
 } 
 
