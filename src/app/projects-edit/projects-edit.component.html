@@ -49,10 +49,9 @@
   <form (ngSubmit)="addMemberProject(f)" #f="ngForm">
     <mat-form-field>
       <input name="email"  ngModel required  [email]="true" matInput placeholder="Email de l'utilisateur">
+      <button type="submit" [disabled]="f.invalid" mat-raised-button>Ajouter un membre</button>
+
     </mat-form-field>
-     <mat-form-field>
-        <button type="submit" [disabled]="f.invalid" mat-raised-button>Ajouter un membre</button>
-     </mat-form-field>    
   </form>
 </mat-card>
 
