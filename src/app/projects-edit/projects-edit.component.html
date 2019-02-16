@@ -7,22 +7,22 @@
     <mat-form-field>
       <input formControlName="name" matInput placeholder="Le nom de votre projet">
       <mat-error *ngIf="name.invalid && name.touched">
-          Le titre est requis
+        Le titre est requis
       </mat-error>
     </mat-form-field>
-    
+
     <mat-form-field>
       <textarea formControlName="description" matInput placeholder="La descritpion de votre projet"></textarea>
       <mat-error *ngIf="description.invalid && description.touched">
-          La description est requise
+        La description est requise
       </mat-error>
     </mat-form-field>
     <label formArrayName="availableSubscribeMethods" *ngFor="let subMethod of projectForm.controls.availableSubscribeMethods.controls; let i = index">
-        <mat-slide-toggle [formControlName]="i" > 
-          {{subMethods[i].label}}
-          <!-- <mat-icon matListIcon>{{subMethods[i].iconName}}</mat-icon> -->
-        </mat-slide-toggle>
-      </label>
+      <mat-slide-toggle [formControlName]="i" >
+        {{subMethods[i].label}}
+        <!-- <mat-icon matListIcon>{{subMethods[i].iconName}}</mat-icon> -->
+      </mat-slide-toggle>
+    </label>
 
 
 
@@ -39,8 +39,8 @@
       <td>{{member.displayName}}</td>
       <td>{{member.email}}</td>
       <td>
-        <button mat-raised-button color="accent" >
-          <mat-icon matListIcon>delete</mat-icon>
+        <button *ngIf="member.uid != project.creator" mat-raised-button color="accent" >
+          <mat-icon matListIcon (click)="deleteMemberProject(member.email)">delete</mat-icon>
         </button>
       </td>
     </tr>
@@ -52,7 +52,11 @@
       <button type="submit" [disabled]="f.invalid" mat-raised-button>Ajouter un membre</button>
 
     </mat-form-field>
+<<<<<<< HEAD
+=======
+    <mat-form-field>
+      <button type="submit" [disabled]="f.invalid" mat-raised-button>Ajouter un membre</button>
+    </mat-form-field>
+>>>>>>> 79ef2328ce9ab511a6787ea2b0ba38097873f357
   </form>
 </mat-card>
-
-

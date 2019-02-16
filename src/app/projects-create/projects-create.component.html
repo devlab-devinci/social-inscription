@@ -24,6 +24,34 @@
           </mat-slide-toggle>
         </label>
       
+
+
+  <table id="customers">
+    <tr>
+      <th>Membre du projet</th>
+      <th>Email</th>
+      <th id="actions">Actions</th>
+    </tr>
+    <tr *ngFor="let member of memberProject">
+      <td>{{member.displayName}}</td>
+      <td>{{member.email}}</td>
+      <td >
+        <button *ngIf="member.uid != creator.uid" mat-raised-button type="button" color="accent" >
+          <mat-icon matListIcon (click)="deleteMemberProject(member)">delete</mat-icon>
+        </button>
+      </td>
+    </tr>
+  </table>
+
+  <form (ngSubmit)="addMemberProject(f)" #f="ngForm">
+    <mat-form-field>
+      <input name="email"  ngModel required  [email]="true" matInput placeholder="Email de l'utilisateur">
+    </mat-form-field>
+    <mat-form-field>
+      <button type="submit" [disabled]="f.invalid" mat-raised-button>Ajouter un membre</button>
+    </mat-form-field>
+  </form>
+
       <button type="submit" [disabled]="projectForm.invalid" mat-raised-button>Créer</button>
     </form>
   </mat-card>

@@ -1,4 +1,13 @@
-<div *ngIf="auth.user | async as user">
-  <mat-card-title>Hello {{user?.displayName || 'User'}}</mat-card-title>
-</div>
-<button mat-button (click)="auth.signOut()">Log out</button>
+<mat-card>
+  <mat-card-header>
+    <div *ngIf="auth.user | async as user">
+      <mat-card-title>Hello {{user?.displayName || 'User'}}</mat-card-title>
+    </div>
+  </mat-card-header>
+  <mat-card-content>
+
+  </mat-card-content>
+  <mat-card-actions>
+    <button mat-button (click)="auth.signOut()">Log out</button>
+  </mat-card-actions>
+</mat-card>

@@ -52,10 +52,10 @@ export class ProjectService {
     })
   }
 
-  public async editProject(project, project_id, newMembre_id = null) {
-    //TODO : Add the possibilty to add memebers to a projects when creating it
-    if (newMembre_id != null) {
-      project.members.push(newMembre_id);
+  public async editProject(project, project_id, newUserMember = null) {
+
+    if(newUserMember != null){
+      project.members = newUserMember;
     }
 
     await this.afStore.doc<Project>(`projects/${project_id}`).set({
@@ -65,7 +65,11 @@ export class ProjectService {
       ...project
     })
 
-    this.router.navigate([`/projects/${project_id}`])
+    if(newUserMember == null){
+      this.router.navigate([`/projects/${project_id}`])
+    } else {
+      this.router.navigate([`/projects/${project_id}/edit`])
+    }
   }
 
   deleteProject(project_id: string) {
@@ -91,22 +95,81 @@ export class ProjectService {
   }
 
 
-  addMember(email: string, project: Project) {
-    const userSub = this.userService.getMemberByEmail(email);
-    userSub.subscribe(res => {
-      if (res.length == 0) {
+  public addMember(email: string, project: Project) {
+    const userSub  = this.userService.getMemberByEmail(email);
+
+    userSub.subscribe(res =>
+    {
+
+      if(res.length == 0){
         /**
-         * Affiche ton un message d'erreur
+         * Affiche ton un message d'erreur todo
          */
+        console.log('membre innexistant');
         return;
       }
 
       return res.map(
-        user => {
-          this.projectsCollection.doc(project.id).update({
-            "members" : [...project.members.map(res => res.uid), user.uid]
-          })
-          //this.editProject(project, project.id, user);
+        async user => {
+          if(project.members.indexOf(user['uid']) > -1){
+            /**
+             * Message erreur todo
+             */
+            console.log('membre déjà dans le projet');
+            return;
+          }
+          const newMembers = [];
+          project.members.forEach( (member)=> {
+            newMembers.push(member.uid);
+          });
+          newMembers.push(user['uid']);
+
+          this.editProject(project, project.id,  newMembers );
+        })
+    })
+
+  }
+
+
+  public deleteMember(email: string, project: Project) {
+    console.log(email);
+    console.log(project);
+
+    const userSub  = this.userService.getMemberByEmail(email);
+
+    userSub.subscribe(res =>
+    {
+
+      if(res.length == 0){
+        /**
+         * Affiche ton un message d'erreur todo
+         */
+        console.log('membre innexistant');
+        return;
+      }
+
+      return res.map(
+        async user => {
+
+          if( project.members.indexOf(user['uid']) != -1 ){
+            /**
+             * Message erreur todo
+             */
+            console.log('membre pas dans le projet');
+            return;
+          }
+
+
+          var saveMember = [];
+
+          project.members.forEach(function (member) {
+            if( member.uid != user['uid']){
+
+              saveMember.push(member['uid']);
+            }
+          });
+
+          this.editProject(project, project.id, saveMember );
         })
     })
 
