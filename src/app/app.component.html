@@ -1,4 +1,11 @@
 <app-top-nav></app-top-nav>
+
+<div class="blockAlert" *ngFor="let alert of flashService.getMessages(); let i = index">
+  <div (click)="flashService.deleteMessage(alert.id)" class="messageAlert" data-id="{{alert.id}}">
+    <p>{{alert.message}}</p>
+  </div>
+</div>
 <router-outlet></router-outlet>
+
 
       
