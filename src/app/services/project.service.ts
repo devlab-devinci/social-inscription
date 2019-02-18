@@ -10,6 +10,7 @@ import { MatDialogRef, MatDialog } from '@angular/material';
 import { DialogConfirmComponent } from '../components/dialog-confirm/dialog-confirm.component';
 import { availableSubscribeMethodsInit } from '../models/availableSubscribeMethods'
 import { FlashMessage } from "../services/flashMessage.service";
+import {forEach} from "@angular/router/src/utils/collection";
 
 @Injectable({
   providedIn: 'root'
@@ -59,7 +60,7 @@ export class ProjectService {
   }
 
   public async editProject(project, project_id, newUserMember = null) {
-
+    console.log(project);
     if (newUserMember != null) {
       project.members = newUserMember;
     }
@@ -111,6 +112,7 @@ export class ProjectService {
 
 
   public addMember(email: string, project: Project) {
+
     const userSub = this.userService.getMemberByEmail(email);
 
     userSub.subscribe(res => {
@@ -122,17 +124,23 @@ export class ProjectService {
 
       return res.map(
         async user => {
-          if (project.members.indexOf(user['uid']) > -1) {
+
+
+          const newMembers = [];
+          project.members.forEach((member) => {
+
+            newMembers.push(member.uid);
+          });
+
+          if ( newMembers.indexOf(user['uid']) > -1) {
             this.flashMessage.setMessage('Le membre est déjà dans le projet');
             return;
           }
-          const newMembers = [];
-          project.members.forEach((member) => {
-            newMembers.push(member.uid);
-          });
+
           newMembers.push(user['uid']);
 
           this.editProject(project, project.id, newMembers);
+          return true;
         })
     })
 
