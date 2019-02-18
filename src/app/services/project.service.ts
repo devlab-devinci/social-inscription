@@ -9,7 +9,8 @@ import { UserService } from '../services/user.service';
 import { MatDialogRef, MatDialog } from '@angular/material';
 import { DialogConfirmComponent } from '../components/dialog-confirm/dialog-confirm.component';
 import { availableSubscribeMethodsInit } from '../models/availableSubscribeMethods'
-
+import { FlashMessage } from "../services/flashMessage.service";
+import {forEach} from "@angular/router/src/utils/collection";
 
 @Injectable({
   providedIn: 'root'
@@ -20,6 +21,7 @@ export class ProjectService {
   projects: Observable<Project[]>;
   project: Observable<Project>;
   constructor(
+    public flashMessage: FlashMessage,
     public afStore: AngularFirestore,
     public afAuth: AuthService,
     public router: Router,
@@ -59,7 +61,7 @@ export class ProjectService {
   }
 
   public async editProject(project, project_id, newUserMember = null) {
-
+    console.log(project);
     if (newUserMember != null) {
       project.members = newUserMember;
     }
@@ -109,34 +111,35 @@ export class ProjectService {
 
 
   public addMember(email: string, project: Project) {
+
     const userSub = this.userService.getMemberByEmail(email);
 
     userSub.subscribe(res => {
 
       if (res.length == 0) {
-        /**
-         * Affiche ton un message d'erreur todo
-         */
-        console.log('membre innexistant');
+        this.flashMessage.setMessage('Le membre n\'existe pas');
         return;
       }
 
       return res.map(
         async user => {
-          if (project.members.indexOf(user['uid']) > -1) {
-            /**
-             * Message erreur todo
-             */
-            console.log('membre déjà dans le projet');
-            return;
-          }
+
+
           const newMembers = [];
           project.members.forEach((member) => {
+
             newMembers.push(member.uid);
           });
+
+          if ( newMembers.indexOf(user['uid']) > -1) {
+            this.flashMessage.setMessage('Le membre est déjà dans le projet');
+            return;
+          }
+
           newMembers.push(user['uid']);
 
           this.editProject(project, project.id, newMembers);
+          return true;
         })
     })
 
@@ -164,10 +167,7 @@ export class ProjectService {
     userSub.subscribe(res => {
 
       if (res.length == 0) {
-        /**
-         * Affiche ton un message d'erreur todo
-         */
-        console.log('membre innexistant');
+        this.flashMessage.setMessage('Le membre n\'existe pas');
         return;
       }
 
@@ -175,10 +175,7 @@ export class ProjectService {
         async user => {
 
           if (project.members.indexOf(user['uid']) != -1) {
-            /**
-             * Message erreur todo
-             */
-            console.log('membre pas dans le projet');
+            this.flashMessage.setMessage('Le membre n\'est pas dans le projet');
             return;
           }
 

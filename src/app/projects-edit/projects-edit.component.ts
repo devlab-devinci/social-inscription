@@ -18,6 +18,7 @@ import {User} from "../models/User.model";
 export class ProjectsEditComponent implements OnInit, OnDestroy {
   projectForm: FormGroup;
   addMember: FormGroup;
+  memberProject;
   subMethods: any;
   public project;
   public projectSub: Subscription;
@@ -32,7 +33,7 @@ export class ProjectsEditComponent implements OnInit, OnDestroy {
     this.route.params.subscribe(params => {
       this.projectSub = this.projectService.getProject(params['id']).subscribe(res => {
         this.project =  res;
-
+        this.memberProject = res.members;
         this.subMethods = availableSubscribeMethodsInit;
         const availableSubscribeMethodsInitControls = availableSubscribeMethodsInit.map((c, index) => {
           return new FormControl(this.project.availableSubscribeMethods[index])
@@ -54,6 +55,8 @@ export class ProjectsEditComponent implements OnInit, OnDestroy {
               email: new FormControl( 'text',[ Validators.required, Validators.email ])
           });
       })
+
+
     })
   }
 
@@ -70,10 +73,29 @@ export class ProjectsEditComponent implements OnInit, OnDestroy {
 
   addMemberProject(form: NgForm) {
     this.projectService.addMember(form.value['email'], this.project);
+    this.route.params.subscribe(params => {
+      this.projectSub = this.projectService.getProject(params['id']).subscribe(res => {
+        this.project = res;
+        this.memberProject = res.members;
+      })
+    });
   }
 
   deleteMemberProject(email:string){
     this.projectService.deleteMember(email, this.project);
+    const newMember = [];
+    this.memberProject.forEach( (member) => {
+        if(member.email != email){
+          newMember.push(member);
+        }
+    });
+    this.memberProject = newMember;
+    this.route.params.subscribe(params => {
+      this.projectSub = this.projectService.getProject(params['id']).subscribe(res => {
+        this.project = res;
+        this.memberProject = res.members;
+      })
+    });
   }
 
   public editProject() {
