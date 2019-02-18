@@ -12,6 +12,26 @@
         {{subMethod.label}}
       </button>
     </ng-container>
+    <mat-divider></mat-divider>
+    <h2>S'inscire manuellement : </h2>
+
+    <form [formGroup]="subForm" class="flex-column" (submit)="manualSub()">
+      <mat-form-field>
+        <input formControlName="displayName" matInput placeholder="Votre nom" type="text">
+        <mat-error *ngIf="displayName.invalid && displayName.touched">
+          On a besoin de votre nom!
+        </mat-error>
+      </mat-form-field>
+
+      <mat-form-field>
+        <input formControlName="email" matInput placeholder="Votre addresse email">
+        <mat-error *ngIf="email.invalid && email.touched">
+          Votre email est incorrect
+        </mat-error>
+      </mat-form-field>
+
+      <button type="submit" [disabled]="subForm.invalid" mat-raised-button>Je m'inscire</button>
+    </form>
   </mat-card-content>
 </mat-card>
 
