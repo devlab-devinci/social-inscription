@@ -26,6 +26,10 @@ import { ProjectsCreateComponent } from './projects-create/projects-create.compo
 import { ProjectsEditComponent } from './projects-edit/projects-edit.component';
 import { DialogConfirmComponent } from './components/dialog-confirm/dialog-confirm.component';
 import { MatGridListModule } from '@angular/material';
+import { ProjectSubscribeComponent } from './project-subscribe/project-subscribe.component';
+import {WINDOW_PROVIDERS} from './WINDOW_PROVIDER';
+import { ProjectQrcodeComponent } from './project-qrcode/project-qrcode.component'
+import { NgxQRCodeModule } from 'ngx-qrcode2';
 
 
 
@@ -42,7 +46,9 @@ import { MatGridListModule } from '@angular/material';
     ProjectsDetailComponent,
     ProjectsCreateComponent,
     ProjectsEditComponent,
-    DialogConfirmComponent
+    DialogConfirmComponent,
+    ProjectSubscribeComponent,
+    ProjectQrcodeComponent
   ],
   imports: [
     BrowserModule,
@@ -55,13 +61,17 @@ import { MatGridListModule } from '@angular/material';
     AngularFireAuthModule,
     MatSnackBarModule,
     AngularFirestoreModule,
-    MatGridListModule
+    MatGridListModule,
+    NgxQRCodeModule
   ],
   providers: [
     AuthService,
     AuthGuard,
     NotAuthGuard,
-    MatSnackBar
+    MatSnackBar,
+    WINDOW_PROVIDERS,
+    
+
   ],  
   entryComponents: [DialogConfirmComponent],
 

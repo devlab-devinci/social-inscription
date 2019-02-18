@@ -6,6 +6,10 @@ import * as firebase from 'firebase';
 import { Router, ActivatedRoute } from '@angular/router';
 import { AuthService } from '../auth/auth.service';
 import { UserService } from '../services/user.service';
+import { MatDialogRef, MatDialog } from '@angular/material';
+import { DialogConfirmComponent } from '../components/dialog-confirm/dialog-confirm.component';
+import { availableSubscribeMethodsInit } from '../models/availableSubscribeMethods'
+
 
 @Injectable({
   providedIn: 'root'
@@ -20,9 +24,14 @@ export class ProjectService {
     public afAuth: AuthService,
     public router: Router,
     private route: ActivatedRoute,
-    private userService: UserService
+    private userService: UserService,
+    public dialog: MatDialog
   ) {
-    this.projectsCollection = this.afStore.collection('projects', ref => ref.where("members", "array-contains", this.afAuth.authState.uid));
+    if (this.router.url.includes('subscribe')) {
+      this.projectsCollection = this.afStore.collection('projects');
+    } else {
+      this.projectsCollection = this.afStore.collection('projects', ref => ref.where("members", "array-contains", this.afAuth.authState.uid));
+    }
   }
 
   getUserProjects() {
@@ -54,7 +63,7 @@ export class ProjectService {
 
   public async editProject(project, project_id, newUserMember = null) {
 
-    if(newUserMember != null){
+    if (newUserMember != null) {
       project.members = newUserMember;
     }
 
@@ -65,7 +74,7 @@ export class ProjectService {
       ...project
     })
 
-    if(newUserMember == null){
+    if (newUserMember == null) {
       this.router.navigate([`/projects/${project_id}`])
     } else {
       this.router.navigate([`/projects/${project_id}/edit`])
@@ -85,6 +94,15 @@ export class ProjectService {
         const project_data = res.data() as Project;
         project_data.members = this.userService.getMembersByArray(project_data.members);
         project_data.subscribers = this.userService.getMembersByArray(project_data.subscribers);
+
+        project_data.availableSubscribeMethods = project_data.availableSubscribeMethods.map((val, index) => {
+          return {
+            active: val,
+            ...availableSubscribeMethodsInit[index]
+          }
+        })
+
+
         return {
           ...project_data,
           id: res.id
@@ -96,12 +114,11 @@ export class ProjectService {
 
 
   public addMember(email: string, project: Project) {
-    const userSub  = this.userService.getMemberByEmail(email);
+    const userSub = this.userService.getMemberByEmail(email);
 
-    userSub.subscribe(res =>
-    {
+    userSub.subscribe(res => {
 
-      if(res.length == 0){
+      if (res.length == 0) {
         /**
          * Affiche ton un message d'erreur todo
          */
@@ -111,7 +128,7 @@ export class ProjectService {
 
       return res.map(
         async user => {
-          if(project.members.indexOf(user['uid']) > -1){
+          if (project.members.indexOf(user['uid']) > -1) {
             /**
              * Message erreur todo
              */
@@ -119,28 +136,39 @@ export class ProjectService {
             return;
           }
           const newMembers = [];
-          project.members.forEach( (member)=> {
+          project.members.forEach((member) => {
             newMembers.push(member.uid);
           });
           newMembers.push(user['uid']);
 
-          this.editProject(project, project.id,  newMembers );
+          this.editProject(project, project.id, newMembers);
         })
     })
 
   }
 
+  openConfirm(project_id: string) {
+    const confirmRef = this.dialog.open(DialogConfirmComponent, {
+      data: {
+        title: "Estes-vous sur de vouloir supprimer cette élément ?",
+        message: "La supression d'un projet est définitive"
+      }
+    });
+
+    confirmRef.afterClosed().subscribe(bool => {
+      if (bool) {
+        this.deleteProject(project_id);
+      }
+    });
+  }
 
   public deleteMember(email: string, project: Project) {
-    console.log(email);
-    console.log(project);
 
-    const userSub  = this.userService.getMemberByEmail(email);
+    const userSub = this.userService.getMemberByEmail(email);
 
-    userSub.subscribe(res =>
-    {
+    userSub.subscribe(res => {
 
-      if(res.length == 0){
+      if (res.length == 0) {
         /**
          * Affiche ton un message d'erreur todo
          */
@@ -151,7 +179,7 @@ export class ProjectService {
       return res.map(
         async user => {
 
-          if( project.members.indexOf(user['uid']) != -1 ){
+          if (project.members.indexOf(user['uid']) != -1) {
             /**
              * Message erreur todo
              */
@@ -163,13 +191,13 @@ export class ProjectService {
           var saveMember = [];
 
           project.members.forEach(function (member) {
-            if( member.uid != user['uid']){
+            if (member.uid != user['uid']) {
 
               saveMember.push(member['uid']);
             }
           });
 
-          this.editProject(project, project.id, saveMember );
+          this.editProject(project, project.id, saveMember);
         })
     })
 

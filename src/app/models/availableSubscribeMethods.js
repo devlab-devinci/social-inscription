@@ -1,9 +1,12 @@
 export const availableSubscribeMethodsInit = [{
     iconName : "google",
-    label : "Google"
+    label : "Google",
+    methodName : "Google"
+
   },
   {
     iconName : "facebook",
-    label : "Facebook"
+    label : "Facebook",
+    methodName : "Facebook"
   },
 ]

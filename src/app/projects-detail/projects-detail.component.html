@@ -1,13 +1,69 @@
 <mat-card *ngIf="project">
-    <mat-card-title >
-        {{project.name}}
-    </mat-card-title>
-    <mat-card-content>
+  <mat-card-title>
+    {{project.name}}
+  </mat-card-title>
+  <mat-card-content>
     <p>{{project.description}}</p>
-
     <mat-divider></mat-divider>
 
-    <mat-list>
+    <h2>Mes bouttons</h2>
+    <ng-container *ngFor="let subMethod of project.availableSubscribeMethods">
+      <div mat-raised-button *ngIf="subMethod.active">
+        <mat-form-field>
+          
+          <textarea matInput disabled="disabled" rows="20" cols="200" [id]="'text-' + project.id + '-' + subMethod.methodName">
+          <a style='display: inline-block;
+          max-width: 200px;
+          margin: 0;
+          padding: 0.75rem 1rem;
+          border: 0;
+          border-radius: 0.317rem;
+          background-color: #3f51b5;
+          color: #fff;
+          text-decoration: none;
+          font-weight: 700;
+          font-size: 1rem;
+          line-height: 1.5;
+          font-family: "Helvetica Neue", Arial, sans-serif;
+          cursor: pointer;
+          -webkit-appearance: none;
+          -webkit-font-smoothing: antialiased;' href="{{windowOrigin+'/projects/'+project.id + '/subscribe/' + subMethod.methodName.toLowerCase()}}">S'inscrire avec {{subMethod.label}}</a>
+        </textarea>
+
+        </mat-form-field>
+        <a style='display: block;
+        pointer-events: none;
+        max-width: 200px;
+        text-align: center;
+        margin: 0;
+        padding: 0.75rem 1rem;
+        border: 0;
+        border-radius: 0.317rem;
+        background-color: #3f51b5;
+        color: #fff;
+        text-decoration: none;
+        font-weight: 700;
+        font-size: 1rem;
+        line-height: 1.5;
+        font-family: "Helvetica Neue", Arial, sans-serif;
+        cursor: pointer;
+        -webkit-appearance: none;
+        -webkit-font-smoothing: antialiased;'
+          href="{{windowOrigin+'/projects/'+project.id + '/subscribe/' + subMethod.methodName.toLowerCase()}}">S'inscrire
+          avec {{subMethod.label}}</a>
+          <button mat-raised-button (click)="copyToClipboard('text-' + project.id + '-' + subMethod.methodName)">
+              Copier l'HTML du boutton
+            </button>
+      </div>
+      <mat-divider></mat-divider>
+    </ng-container>
+
+    <h2>Mon QR Code</h2>
+    <button mat-raised-button color="" [routerLink]="['/projects/'+ project.id +'/qrcode']">
+      Voir mon QR code
+    </button>
+
+<mat-list>
       <h2>Membre du projet</h2>
       <mat-list-item *ngFor="let member of project.members">
         <img mat-list-avatar [src]="member.photoURL" [alt]="member.photoURL">
@@ -17,9 +73,14 @@
       </mat-list-item>
     </mat-list>
 
-</mat-card-content>
-    
-  </mat-card>
-  
-  
-  
+    <mat-card-actions>
+      <button mat-raised-button color="primary" [routerLink]="['/projects/'+ project.id +'/edit']">
+        <mat-icon matListIcon>edit</mat-icon>
+      </button>
+      <button mat-raised-button color="accent" (click)="projectService.openConfirm(project.id)">
+        <mat-icon matListIcon>delete</mat-icon>
+      </button>
+    </mat-card-actions>
+  </mat-card-content>
+
+</mat-card>

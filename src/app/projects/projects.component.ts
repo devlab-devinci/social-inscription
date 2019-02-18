@@ -1,7 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { ProjectService } from '../services/project.service';
-import { MatDialogRef, MatDialog } from '@angular/material';
-import { DialogConfirmComponent } from '../components/dialog-confirm/dialog-confirm.component';
 import { Observable } from 'rxjs';
 
 @Component({
@@ -15,7 +13,6 @@ export class ProjectsComponent implements OnInit {
 
   constructor(
     public projectService: ProjectService,
-    public dialog: MatDialog
   ) {
     this.displayedColumns = ['name', 'description', 'actions',]
     this.projects = projectService.getUserProjects();
@@ -24,18 +21,5 @@ export class ProjectsComponent implements OnInit {
   ngOnInit() {
   }
 
-  openConfirm(project_id: string) {
-    const confirmRef = this.dialog.open(DialogConfirmComponent, {
-      data: {
-        title: "Estes-vous sur de vouloir supprimer cette élément ?",
-        message: "La supression d'un projet est définitive"
-      }
-    });
-
-    confirmRef.afterClosed().subscribe(bool => {
-      if (bool) {
-        this.projectService.deleteProject(project_id);
-      }
-    });
-  }
+  
 }

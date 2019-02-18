@@ -45,7 +45,7 @@ export class AuthService {
         const res = await firebase.auth().signInWithPopup(provider);
         resolve(res);
         this.updateUserData(res.user)
-        this.router.navigate(['/user']);
+        this.router.navigate(['/projects']);
       })
       .catch((error) => {
         this.processErrors(error)
@@ -107,7 +107,7 @@ export class AuthService {
 
     const userRef: AngularFirestoreDocument<User> = this.afStore.doc(`users/${user.uid}`);
 
-    const data: User = {
+    const data = {
       uid: user.uid,
       email: user.email,
       displayName: user.displayName !== null ? user.displayName : displayName,

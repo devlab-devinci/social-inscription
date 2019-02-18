@@ -11,6 +11,8 @@ import { NotAuthGuard } from './auth/notauth.guard';
 import { ProjectsCreateComponent } from './projects-create/projects-create.component';
 import { ProjectsDetailComponent } from './projects-detail/projects-detail.component';
 import { ProjectsEditComponent } from './projects-edit/projects-edit.component';
+import { ProjectSubscribeComponent } from './project-subscribe/project-subscribe.component';
+import { ProjectQrcodeComponent } from './project-qrcode/project-qrcode.component';
 
 const routes: Routes = [
   { path: '', redirectTo : '/login', pathMatch:'full', canActivate : [NotAuthGuard]},
@@ -20,7 +22,14 @@ const routes: Routes = [
   { path: 'projects', component: ProjectsComponent, canActivate: [AuthGuard]},
   { path: 'projects/new', component: ProjectsCreateComponent, canActivate: [AuthGuard]},
   { path: 'projects/:id', component: ProjectsDetailComponent, canActivate: [AuthGuard]},
+  { path: 'projects/:id/qrcode', component: ProjectQrcodeComponent, canActivate: [AuthGuard]},
   { path: 'projects/:id/edit', component: ProjectsEditComponent, canActivate: [AuthGuard]},
+
+  { path: 'projects/:id/subscribe', component: ProjectSubscribeComponent},
+  { path: 'projects/:id/subscribe/:method', component: ProjectSubscribeComponent},
+  { path: 'projects/:id/thanks', component: ProjectSubscribeComponent},
+
+
 
 
   { path: 'login', component: LoginComponent, canActivate : [NotAuthGuard]},
