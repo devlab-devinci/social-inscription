@@ -9,7 +9,7 @@ import { UserService } from '../services/user.service';
 import { MatDialogRef, MatDialog } from '@angular/material';
 import { DialogConfirmComponent } from '../components/dialog-confirm/dialog-confirm.component';
 import { availableSubscribeMethodsInit } from '../models/availableSubscribeMethods'
-
+import { FlashMessage } from "../services/flashMessage.service";
 
 @Injectable({
   providedIn: 'root'
@@ -20,6 +20,7 @@ export class ProjectService {
   projects: Observable<Project[]>;
   project: Observable<Project>;
   constructor(
+    public flashMessage: FlashMessage,
     public afStore: AngularFirestore,
     public afAuth: AuthService,
     public router: Router,
@@ -115,20 +116,14 @@ export class ProjectService {
     userSub.subscribe(res => {
 
       if (res.length == 0) {
-        /**
-         * Affiche ton un message d'erreur todo
-         */
-        console.log('membre innexistant');
+        this.flashMessage.setMessage('Le membre n\'existe pas');
         return;
       }
 
       return res.map(
         async user => {
           if (project.members.indexOf(user['uid']) > -1) {
-            /**
-             * Message erreur todo
-             */
-            console.log('membre déjà dans le projet');
+            this.flashMessage.setMessage('Le membre est déjà dans le projet');
             return;
           }
           const newMembers = [];
@@ -165,10 +160,7 @@ export class ProjectService {
     userSub.subscribe(res => {
 
       if (res.length == 0) {
-        /**
-         * Affiche ton un message d'erreur todo
-         */
-        console.log('membre innexistant');
+        this.flashMessage.setMessage('Le membre n\'existe pas');
         return;
       }
 
@@ -176,10 +168,7 @@ export class ProjectService {
         async user => {
 
           if (project.members.indexOf(user['uid']) != -1) {
-            /**
-             * Message erreur todo
-             */
-            console.log('membre pas dans le projet');
+            this.flashMessage.setMessage('Le membre n\'est pas dans le projet');
             return;
           }
 
