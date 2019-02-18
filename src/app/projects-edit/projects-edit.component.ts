@@ -99,6 +99,11 @@ export class ProjectsEditComponent implements OnInit, OnDestroy {
   }
 
   public editProject() {
+    const memberUid = [];
+    this.project.members.forEach( (member) => {
+        memberUid.push(member.uid);
+    });
+    this.projectForm.value.members = memberUid;
     this.projectService.editProject(this.projectForm.value, this.project.id);
   }
 

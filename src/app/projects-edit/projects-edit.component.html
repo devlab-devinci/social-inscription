@@ -17,7 +17,7 @@
         La description est requise
       </mat-error>
     </mat-form-field>
-    <label formArrayName="availableSubscribeMethods" *ngFor="let subMethod of projectForm.controls.availableSubscribeMethods.controls; let i = index">
+    <label class="marge" formArrayName="availableSubscribeMethods" *ngFor="let subMethod of projectForm.controls.availableSubscribeMethods.controls; let i = index">
       <mat-slide-toggle [formControlName]="i" >
         {{subMethods[i].label}}
         <!-- <mat-icon matListIcon>{{subMethods[i].iconName}}</mat-icon> -->
@@ -26,9 +26,6 @@
 
 
 
-
-    <button type="submit" [disabled]="projectForm.invalid" mat-raised-button>Mettre a jour</button>
-  </form>
   <table id="customers">
     <tr>
       <th>Membre du projet</th>
@@ -39,7 +36,7 @@
       <td>{{member.displayName}}</td>
       <td>{{member.email}}</td>
       <td>
-        <button *ngIf="member.uid != project.creator" mat-raised-button color="accent" >
+        <button  type="button" *ngIf="member.uid != project.creator" mat-raised-button color="accent" >
           <mat-icon matListIcon (click)="deleteMemberProject(member.email)">delete</mat-icon>
         </button>
       </td>
@@ -51,5 +48,10 @@
       <input name="email"  ngModel required  [email]="true" matInput placeholder="Email de l'utilisateur">
       <button type="submit" [disabled]="f.invalid" mat-raised-button>Ajouter un membre</button>
     </mat-form-field>
+  </form>
+
+
+
+    <button type="submit" [disabled]="projectForm.invalid" mat-raised-button>Mettre a jour</button>
   </form>
 </mat-card>
