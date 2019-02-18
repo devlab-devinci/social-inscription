@@ -12,9 +12,9 @@
   <ng-container matColumnDef="actions">
     <th mat-header-cell *matHeaderCellDef> Actions </th>
     <td mat-cell *matCellDef="let element">
-      <button mat-raised-button color="" [routerLink]="['/projects/'+ element.id ]">
-        <mat-icon matListIcon>visibility</mat-icon>
-      </button>
+        <button mat-raised-button color="" [routerLink]="['/projects/'+ element.id]">
+          <mat-icon matListIcon>visibility</mat-icon>
+        </button>
       <button mat-raised-button color="primary" [routerLink]="['/projects/'+ element.id +'/edit']">
         <mat-icon matListIcon>edit</mat-icon>
       </button>

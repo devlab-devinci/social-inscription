@@ -29,6 +29,7 @@ export class ProjectService {
     private userService: UserService,
     public dialog: MatDialog
   ) {
+
     if (this.router.url.includes('subscribe')) {
       this.projectsCollection = this.afStore.collection('projects');
     } else {
@@ -91,7 +92,7 @@ export class ProjectService {
           this.router.navigate(['/projects'])
         const project_data = res.data() as Project;
         project_data.members = this.userService.getMembersByArray(project_data.members);
-        project_data.subscribers = this.userService.getMembersByArray(project_data.subscribers);
+        //  project_data.subscribers = this.userService.getMembersByArray(project_data.subscribers);
 
         project_data.availableSubscribeMethods = project_data.availableSubscribeMethods.map((val, index) => {
           return {
@@ -99,8 +100,6 @@ export class ProjectService {
             ...availableSubscribeMethodsInit[index]
           }
         })
-
-
         return {
           ...project_data,
           id: res.id

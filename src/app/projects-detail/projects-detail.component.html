@@ -6,6 +6,19 @@
     <p>{{project.description}}</p>
     <mat-divider></mat-divider>
 
+    <h2>Mes abonnés</h2>
+    <table id="abonnes">
+        <tr>
+          <th>Abonnés au projet</th>
+          <th>Email</th>
+        </tr>
+        <tr *ngFor="let sub of project.subscribers">
+          <td>{{sub.displayName}}</td>
+          <td>{{sub.email}}</td>
+        </tr>
+      </table>
+
+
     <h2>Mes bouttons</h2>
     <ng-container *ngFor="let subMethod of project.availableSubscribeMethods">
       <div mat-raised-button *ngIf="subMethod.active">
@@ -58,21 +71,12 @@
       <mat-divider></mat-divider>
     </ng-container>
 
-    <h2>Mon QR Code</h2>
+    <h2>Le QR Code du projet</h2>
     <button mat-raised-button color="" [routerLink]="['/projects/'+ project.id +'/qrcode']">
       Voir mon QR code
     </button>
-
-<mat-list>
-      <h2>Membre du projet</h2>
-      <mat-list-item *ngFor="let member of project.members">
-        <img mat-list-avatar [src]="member.photoURL" [alt]="member.photoURL">
-        <h3 matLine> {{member.displayName}} </h3>
-        <p matLine> {{member.email}} </p>
-        <mat-divider></mat-divider>
-      </mat-list-item>
-    </mat-list>
-
+    {{project.members}}
+    
     <mat-card-actions>
       <button mat-raised-button color="primary" [routerLink]="['/projects/'+ project.id +'/edit']">
         <mat-icon matListIcon>edit</mat-icon>

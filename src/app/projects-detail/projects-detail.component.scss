@@ -1,0 +1,29 @@
+.flex-column{
+    display: flex;
+    flex-direction: column;
+}
+
+#abonnes {
+    margin-top: 15px;
+    margin-bottom: 15px;
+    font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
+    border-collapse: collapse;
+    width: 100%;
+}
+
+#abonnes td, #abonnes th {
+    border: 1px solid #ddd;
+    padding: 8px;
+}
+
+#abonnes tr:nth-child(even){background-color: #f2f2f2;}
+
+#abonnes tr:hover {background-color: #ddd;}
+
+#abonnes th {
+    padding-top: 12px;
+    padding-bottom: 12px;
+    text-align: left;
+    background-color: #3f51b5;
+    color: white;
+}

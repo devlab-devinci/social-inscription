@@ -6,12 +6,13 @@ import { AngularFireAuth } from '@angular/fire/auth';
 import { Router, Route, ActivatedRoute } from '@angular/router';
 import { MatSnackBar } from '@angular/material';
 import { User } from '../models/User';
+import { ProjectService } from './project.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class SubscribersService {
-
+  public project;
   constructor(
 
     public afAuth: AngularFireAuth,
@@ -19,58 +20,48 @@ export class SubscribersService {
     public router: Router,
     public route: ActivatedRoute,
     public snackBar: MatSnackBar,
-  ) { }
+    public projectService: ProjectService
+  ) {
+
+  }
 
   public doSubscribeGoogle() {
-    firebase.auth().getRedirectResult().then((result) =>  {
-      var user = result.user;
-      console.log(user)
-      if(user != null){
-        console.log(user)
-        this.updateSubscriberData(user)
-        this.route.firstChild.params.subscribe(params => {
-          let projectDoc = this.afStore.doc<Project>(`projects/${params['id']}`);
-          projectDoc.valueChanges().subscribe(project => {
-            if (!project.subscribers.includes(user.uid)) {
-                project.subscribers.push(user.uid);
-                projectDoc.set(project, { merge: true }).then(res => {
-              })
-            }
-            this.router.navigate([`projects/${params['id']}/thanks`]);
-          })
-        })
-      }else{
-        firebase.auth().setPersistence(firebase.auth.Auth.Persistence.LOCAL)
-        .then(async () => {
-          const provider = new firebase.auth.GoogleAuthProvider();
-          firebase.auth().signInWithRedirect(provider);
-        })
+    firebase.auth().setPersistence(firebase.auth.Auth.Persistence.LOCAL)
+      .then(async () => {
+        const provider = new firebase.auth.GoogleAuthProvider();
+        firebase.auth().signInWithRedirect(provider);
+      })
+  }
+
+  public doSubscribeFacebook() {
+    firebase.auth().setPersistence(firebase.auth.Auth.Persistence.LOCAL)
+      .then(async () => {
+        const provider = new firebase.auth.FacebookAuthProvider();
+        firebase.auth().signInWithRedirect(provider);
+      })
+  }
+  
+  public updateSub(projectDoc, user){
+    let updateSub = projectDoc.valueChanges().subscribe(project => {
+      let projectData = project;
+      if (!projectData.subscribers.find(userF => user.email == userF.email)) {
+        projectData.subscribers.push({ displayName: user.displayName, email: user.email, subscribedAt: this.timestamp });
       }
+      updateSub.unsubscribe()
+      console.log(projectData)
+      projectDoc.set(projectData, { merge: true }).then(res => {
+        console.log(res);
+        this.afAuth.auth.signOut().then(() => {
+          this.route.firstChild.params.subscribe(params =>{
+          this.router.navigate([`projects/${params['id']}/thanks`]);
+        })
+        });
+      })
     })
   }
-
-
-  private updateSubscriberData(user, displayName?) {
-
-    const userRef: AngularFirestoreDocument<User> = this.afStore.doc(`users/${user.uid}`);
-
-    
-  const data = {
-      uid: user.uid,
-      email: user.email,
-      displayName: user.displayName !== null ? user.displayName : displayName,
-      photoURL: user.photoURL,
-      roles : []
+  get timestamp() {
+    return new Date()
   }
-
-  userRef.valueChanges().subscribe(res => {
-    
-  })
-
-    return userRef.set(data, { merge: true })
-
-  }
-
 
 }
 
