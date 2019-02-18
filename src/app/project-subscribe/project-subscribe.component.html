@@ -6,7 +6,6 @@
     <p>{{project.description}}</p>
 
     <mat-divider></mat-divider>
-    {{project | json}}
     <h2>S'inscire avec : </h2>
     <ng-container *ngFor="let subMethod of project.availableSubscribeMethods">
       <button mat-raised-button *ngIf="subMethod.active" mat-raised-button [routerLink]="['/projects/'+project.id + '/subscribe/' + subMethod.methodName.toLowerCase()]">
@@ -21,6 +20,6 @@
     Merci de votre interet pour notre projet "{{project.name}}"
   </mat-card-title>
   <mat-card-content>
-    <p>On vous recontact très bientôt pour la suite des opérations!</p>
+    <p>On vous recontacte très bientôt pour la suite des opérations!</p>
   </mat-card-content>
 </mat-card>
