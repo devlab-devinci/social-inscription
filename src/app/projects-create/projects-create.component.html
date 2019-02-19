@@ -1,12 +1,12 @@
 
 <mat-card>
     <mat-card-title>
-      Créer un projet
+      Créer une campagne
     </mat-card-title>
   
     <form [formGroup]="projectForm" class="flex-column" (submit)="createProject()">
       <mat-form-field>
-        <input formControlName="name" matInput placeholder="Le nom de votre projet">
+        <input formControlName="name" matInput placeholder="Le nom de votre campagne">
         <mat-error *ngIf="name.invalid && name.touched">
             Le titre est requis
         </mat-error>
@@ -25,12 +25,12 @@
           </mat-slide-toggle>
         </label>
       
-        <button type="submit" [disabled]="projectForm.invalid" mat-raised-button>Créer</button>
+        <button type="submit" [disabled]="projectForm.invalid" mat-raised-button color="primary">Créer</button>
       </form>
 
   <table id="customers">
     <tr>
-      <th>Membre du projet</th>
+      <th>Membre de la campagne</th>
       <th>Email</th>
       <th id="actions">Actions</th>
     </tr>

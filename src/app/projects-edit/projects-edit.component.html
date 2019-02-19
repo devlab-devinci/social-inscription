@@ -5,14 +5,14 @@
 
   <form *ngIf="projectForm" [formGroup]="projectForm" class="flex-column" (submit)="editProject()">
     <mat-form-field>
-      <input formControlName="name" matInput placeholder="Le nom de votre projet">
+      <input formControlName="name" matInput placeholder="Le nom de votre campagne">
       <mat-error *ngIf="name.invalid && name.touched">
         Le titre est requis
       </mat-error>
     </mat-form-field>
 
     <mat-form-field>
-      <textarea formControlName="description" matInput placeholder="La descritpion de votre projet"></textarea>
+      <textarea formControlName="description" matInput placeholder="La descritpion de votre campagne"></textarea>
       <mat-error *ngIf="description.invalid && description.touched">
         La description est requise
       </mat-error>
@@ -28,7 +28,7 @@
 
   <table id="customers">
     <tr>
-      <th>Membre du projet</th>
+      <th>Membre de la campagne</th>
       <th>Email</th>
       <th id="actions">Actions</th>
     </tr>

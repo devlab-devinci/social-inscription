@@ -132,7 +132,7 @@ export class ProjectService {
           });
 
           if ( newMembers.indexOf(user['uid']) > -1) {
-            this.flashMessage.setMessage('Le membre est déjà dans le projet');
+            this.flashMessage.setMessage('Le membre est déjà dans la campagne');
             return;
           }
 
@@ -149,7 +149,7 @@ export class ProjectService {
     const confirmRef = this.dialog.open(DialogConfirmComponent, {
       data: {
         title: "Estes-vous sur de vouloir supprimer cette élément ?",
-        message: "La supression d'un projet est définitive"
+        message: "La supression d'une campagne est définitive"
       }
     });
 
@@ -175,7 +175,7 @@ export class ProjectService {
         async user => {
 
           if (project.members.indexOf(user['uid']) != -1) {
-            this.flashMessage.setMessage('Le membre n\'est pas dans le projet');
+            this.flashMessage.setMessage('Le membre n\'est pas dans la campagne');
             return;
           }
 

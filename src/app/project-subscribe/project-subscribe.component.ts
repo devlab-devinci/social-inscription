@@ -67,7 +67,6 @@ export class ProjectSubscribeComponent implements OnInit {
     });
   }
 
-
   public manualSub() {
     this.route.params.subscribe(params => {
       let projectDoc = this.afStore.doc<Project>(`projects/${params['id']}`)

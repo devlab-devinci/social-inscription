@@ -9,7 +9,7 @@
     <h2>Mes abonnés</h2>
     <table id="abonnes">
         <tr>
-          <th>Abonnés au projet</th>
+          <th>Abonnés à la campagne</th>
           <th>Email</th>
         </tr>
         <tr *ngFor="let sub of project.subscribers">
@@ -71,7 +71,7 @@
       <mat-divider></mat-divider>
     </ng-container>
 
-    <h2>Le QR Code du projet</h2>
+    <h2>Le QR Code de la campagne</h2>
     <button mat-raised-button color="" [routerLink]="['/projects/'+ project.id +'/qrcode']">
       Voir mon QR code
     </button>

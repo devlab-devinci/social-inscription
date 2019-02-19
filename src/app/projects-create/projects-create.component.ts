@@ -76,7 +76,7 @@ public async createProject(){
           if(check){
             this.memberProject.push(user);
           } else {
-            this.flashService.setMessage('Le membre est déjà dans le projet');
+            this.flashService.setMessage('Le membre est déjà dans la campagne');
           }
         })
     })
@@ -86,7 +86,7 @@ public async createProject(){
   deleteMemberProject(member){
 
      if(member.uid == this.creator.uid){
-       this.flashService.setMessage('Impossible de supprimer le créateur d un projet');
+       this.flashService.setMessage('Impossible de supprimer le créateur de la campagne');
        return;
      }
      const newArray = [];
