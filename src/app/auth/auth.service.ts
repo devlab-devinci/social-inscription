@@ -57,10 +57,6 @@ export class AuthService {
       .then(async () => {
         const res = await firebase.auth().signInWithEmailAndPassword(emailLogin, passwordLogin);
         resolve(res).then(() => {
-          this.updateUserData(res.user)
-          //resolve(res).then((result) => {
-          //console.log(result, "k  k ");
-          //let user = new User();
           this.router.navigate(['/projects']);
         });
       })
@@ -78,7 +74,7 @@ export class AuthService {
 
         const displayName = `${userForm.surname} ${userForm.name}`
         this.updateUserData(res.user, displayName)
-        this.router.navigate(['/user']);
+        this.router.navigate(['/projects']);
       })
       .catch((error) => {
         this.processErrors(error)

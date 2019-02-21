@@ -18,7 +18,6 @@
         </tr>
       </table>
 
-
     <h2>Mes bouttons</h2>
     <ng-container *ngFor="let subMethod of project.availableSubscribeMethods">
       <div mat-raised-button *ngIf="subMethod.active">
@@ -40,7 +39,7 @@
           font-family: "Helvetica Neue", Arial, sans-serif;
           cursor: pointer;
           -webkit-appearance: none;
-          -webkit-font-smoothing: antialiased;' href="{{windowOrigin+'/projects/'+project.id + '/subscribe/' + subMethod.methodName.toLowerCase()}}">S'inscrire avec {{subMethod.label}}</a>
+          -webkit-font-smoothing: antialiased;' target="_blank" href="{{windowOrigin+'/projects/'+project.id + '/subscribe/' + subMethod.methodName.toLowerCase()}}">S'inscrire avec {{subMethod.label}}</a>
         </textarea>
 
         </mat-form-field>
@@ -62,7 +61,7 @@
         cursor: pointer;
         -webkit-appearance: none;
         -webkit-font-smoothing: antialiased;'
-          href="{{windowOrigin+'/projects/'+project.id + '/subscribe/' + subMethod.methodName.toLowerCase()}}">S'inscrire
+           href="{{windowOrigin+'/projects/'+project.id + '/subscribe/' + subMethod.methodName.toLowerCase()}}">S'inscrire
           avec {{subMethod.label}}</a>
           <button mat-raised-button (click)="copyToClipboard('text-' + project.id + '-' + subMethod.methodName)">
               Copier l'HTML du boutton
@@ -75,8 +74,11 @@
     <button mat-raised-button color="" [routerLink]="['/projects/'+ project.id +'/qrcode']">
       Voir mon QR code
     </button>
-    {{project.members}}
-    
+
+    <h2>Ma page d'inscription</h2>
+    <button mat-raised-button color="" [routerLink]="['/projects/'+ project.id +'/subscribe']">
+      Voire la page
+    </button>
     <mat-card-actions>
       <button mat-raised-button color="primary" [routerLink]="['/projects/'+ project.id +'/edit']">
         <mat-icon matListIcon>edit</mat-icon>
